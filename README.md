@@ -37,7 +37,7 @@ AILS scales from lightweight developer telemetry to tamper-evident, cryptographi
 
 <br>
 
-AILS is complementary to OpenTelemetry. AILS defines the AI-specific semantics, what is recorded and how it is structured. OpenTelemetry provides the telemetry infrastructure — collection, correlation, and transport. AILS events map directly to OpenTelemetry spans, logs, and events without modification to either standard.
+AILS is complementary to OpenTelemetry. AILS defines the AI-specific semantics, what is recorded and how it is structured. OpenTelemetry provides the telemetry infrastructure, collection, correlation, and transport. AILS events map directly to OpenTelemetry spans, logs, and events without modification to either standard.
 
 <br>
 <br>
