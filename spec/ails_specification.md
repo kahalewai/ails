@@ -12,7 +12,7 @@
 
 <br>
 
-*Begin Agent Delegation Chain Standard*
+*Begin AI Logging Standard*
 
 ### ABSTRACT
 
@@ -2001,6 +2001,8 @@ human-in-the-loop processes and providing the evidentiary basis for
 governance frameworks that require human approval before certain actions
 are executed.
 
+<br>
+
 ### 11.2 Event Type: `human.feedback`
 
 **Stability:** Stable
@@ -2019,6 +2021,8 @@ evaluation, learning, and trust calibration.
 | `comment` | string | OPTIONAL | Human-readable comment explaining the feedback. Subject to redaction. |
 | `confidence` | number | OPTIONAL | Confidence in the feedback (0.0 to 1.0), if applicable. |
 | `categories` | array of string | OPTIONAL | Categories or dimensions the feedback applies to (e.g., `"accuracy"`, `"helpfulness"`, `"safety"`, `"relevance"`). |
+
+<br>
 
 ### 11.3 Event Type: `human.confirmation`
 
@@ -2056,6 +2060,8 @@ confirmation.
 | `cid` | string | The Capability Identifier, if applicable (ACS integration). |
 | `single_use` | boolean | Whether the confirmation is valid for a single execution only. Default: `true`. |
 
+<br>
+
 ### 11.4 Event Type: `human.escalation_response`
 
 **Stability:** Stable
@@ -2081,6 +2087,9 @@ proceed, resume, or terminate.
 | `modifications` | object | OPTIONAL | Modifications to apply before resuming. Structure is domain-specific. Subject to redaction. |
 | `reason` | string | OPTIONAL | Human-provided reason for the response. Subject to redaction. |
 | `authority_granted` | boolean | OPTIONAL | Whether the response grants additional authority beyond the original scope. Default: `false`. |
+
+<br>
+
 ## SECTION 12: CATEGORY — AUTHORITY EVENTS
 
 *Normative*
@@ -2102,6 +2111,8 @@ the Deterministic Agent Execution (DAE) standard.
 - DAE Section 4.5 (Enforcement Gate)
 - DAE Section 3.2 (Authority Is Explicit and Finite)
 - DAE Section 3.4 (Default Deny Is Mandatory)
+
+<br>
 
 ### 12.2 Event Type: `authority.token_issued`
 
@@ -2135,6 +2146,8 @@ and scope.
 | `constraints` | object | Additional constraints (e.g., maximum value, time window, geographic restriction). |
 | `tenant_id` | string | Tenant to which the token is bound, if multi-tenant isolation is active. |
 
+<br>
+
 ### 12.3 Event Type: `authority.token_consumed`
 
 **Stability:** Stable
@@ -2153,6 +2166,8 @@ cannot be reused.
 | `consumed_by` | string | MUST | Identity of the component or agent that consumed the token. |
 | `execution_result` | string | MUST | Outcome of the authorized action. One of: `success`, `error`, `partial`. |
 
+<br>
+
 ### 12.4 Event Type: `authority.token_expired`
 
 **Stability:** Stable
@@ -2170,6 +2185,8 @@ action was never executed within the token's validity period.
 | `issued_at` | string | MUST | ISO 8601 UTC timestamp of original issuance. |
 | `expired_at` | string | MUST | ISO 8601 UTC timestamp of expiry. |
 | `reason` | string | OPTIONAL | Reason for non-consumption (e.g., `"timeout"`, `"plan_cancelled"`, `"superseded"`). |
+
+<br>
 
 ### 12.5 Event Type: `authority.token_revoked`
 
@@ -2192,6 +2209,8 @@ distinct from natural expiry.
 | `revoked_by` | string | MUST | Identity of the entity that revoked the token. |
 | `revocation_reason` | string | MUST | Reason for revocation. One of: `policy_change`, `security_incident`, `scope_violation`, `manual_override`, `session_terminated`, `custom`. |
 
+<br>
+
 ### 12.6 Event Type: `authority.gate_passed`
 
 **Stability:** Stable
@@ -2211,6 +2230,8 @@ an authority token and permits the associated action to proceed.
 | `action_id` | string | MUST | Identifier of the action being authorized. |
 | `validations_performed` | array of string | MUST | List of validation checks performed (e.g., `"token_valid"`, `"binding_verified"`, `"scope_checked"`, `"expiry_checked"`, `"intent_matched"`). |
 | `validated_at` | string | MUST | ISO 8601 UTC timestamp of validation. |
+
+<br>
 
 ### 12.7 Event Type: `authority.gate_denied`
 
@@ -2235,6 +2256,9 @@ a default-deny enforcement.
 | `token_id` | string | OPTIONAL | Identifier of the token presented, if any. |
 | `denied_at` | string | MUST | ISO 8601 UTC timestamp of denial. |
 | `escalation_triggered` | boolean | OPTIONAL | Whether the denial triggered an escalation. Default: `false`. |
+
+<br>
+
 ## SECTION 13: CATEGORY — SESSION EVENTS
 
 *Normative*
@@ -6892,4 +6916,4 @@ v2.0.0, 2026.
 **[DSSE]** Secure Systems Lab, "Dead Simple Signing Envelope (DSSE)".
 https://github.com/secure-systems-lab/dsse
 
-### End AI Logging Standard
+*End AI Logging Standard*
