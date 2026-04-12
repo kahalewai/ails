@@ -76,7 +76,7 @@ AILS fills this gap.
 }
 ```
 
-The envelope is invariant. Every event — inference, agent step, tool call, policy decision, security alert — carries the same identity, correlation, provenance, and integrity fields. Variation between event types lives exclusively in the `payload`.
+The envelope is invariant. Every event, inference, agent step, tool call, policy decision, security alert — carries the same identity, correlation, provenance, and integrity fields. Variation between event types lives exclusively in the `payload`.
 
 <br>
 
