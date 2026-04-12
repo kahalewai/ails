@@ -1,22 +1,18 @@
 # AI Logging Standard (AILS)
 
-### Begin AI Logging Standard
-
 <br>
-
-**Title:** AI Logging Standard (AILS)
 
 **Status:** RELEASED
 
 **Date:** 2026-04-10
-
-**Authors:** Shawn Kahalewai Reilly
 
 **Version:** 1.0.0
 
 **License:** Apache License, Version 2.0
 
 <br>
+
+*Begin Agent Delegation Chain Standard*
 
 ### ABSTRACT
 
