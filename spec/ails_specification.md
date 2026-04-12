@@ -2,13 +2,15 @@
 
 <br>
 
-**Status:** RELEASED
+**Status:** Public Draft for Community Review
 
 **Date:** 2026-04-10
 
 **Version:** 1.0.0
 
 **License:** Apache License, Version 2.0
+
+**Audience:** Security architects, AI engineers, AI platform builders, AI security teams, Security Standard authors
 
 <br>
 
@@ -174,12 +176,12 @@ governance — in a single, unified, interoperable format.
 
 The AI Logging Standard (AILS) defines:
 
-1. A **canonical event envelope** — a uniform outer structure for all AI
+1. A **canonical event envelope** - a uniform outer structure for all AI
    telemetry events, providing identity, correlation, provenance,
    timestamps, and integrity fields that are consistent regardless of
    event type.
 
-2. A **structured event taxonomy** — a comprehensive, namespaced
+2. A **structured event taxonomy** - a comprehensive, namespaced
    classification of AI event types spanning inference, agent execution,
    tool invocation, memory access, human interaction, authority
    lifecycle, session governance, credential management, policy
@@ -187,22 +189,22 @@ The AI Logging Standard (AILS) defines:
    capability governance, control channel operations, and system
    health.
 
-3. A **graduated integrity model** — three conformance levels that scale
+3. A **graduated integrity model** - three conformance levels that scale
    from lightweight developer telemetry (Level 1) to tamper-evident,
    hash-chained, signed audit trails (Level 3) suitable for regulatory
    compliance and security-critical deployments.
 
-4. A **provenance classification system** — mandatory source trust
+4. A **provenance classification system** - mandatory source trust
    tagging on every event, enabling downstream systems to distinguish
    events originating from system-trusted, user-trusted, and
    external-untrusted sources.
 
-5. A **privacy and redaction framework** — normative requirements for
+5. A **privacy and redaction framework** - normative requirements for
    handling sensitive data including prompts, completions, personally
    identifiable information, credentials, and chain-of-thought
    reasoning, with configurable redaction profiles.
 
-6. A **cross-standard integration model** — normative event type
+6. A **cross-standard integration model** - normative event type
    definitions that satisfy the audit requirements of DAE, AGBAC, ALS,
    AI-SCS, ACS, and the MCP Integrity Standard, enabling implementations
    of those standards to emit conformant AILS events rather than
@@ -243,9 +245,9 @@ The AI Logging Standard (AILS) defines:
 
 AILS is complementary to OpenTelemetry. The relationship is:
 
-- AILS defines **AI-specific semantics** — the meaning and structure of
+- AILS defines **AI-specific semantics** - the meaning and structure of
   AI telemetry events.
-- OpenTelemetry provides **telemetry infrastructure** — collection,
+- OpenTelemetry provides **telemetry infrastructure** - collection,
   correlation, export, and transport.
 
 AILS events MAY be:
@@ -2281,6 +2283,8 @@ sessions as defined by the Agent Capability Standard (ACS).
 - ACS Section 8.1 (Runtime Component Model)
 - DAE Section 4.3 (Runtime State Machine)
 
+<br>
+
 ### 13.2 Event Type: `session.initialized`
 
 **Stability:** Stable
@@ -2307,6 +2311,8 @@ context for all subsequent events within the session boundary.
 session-type-specific configuration parameters. Credential material,
 private keys, and authentication secrets MUST NOT be included in the
 configuration object.
+
+<br>
 
 ### 13.3 Event Type: `session.state_changed`
 
@@ -2342,6 +2348,8 @@ applicable session governance standard. Implementations SHOULD validate
 transitions against the applicable state machine before emitting the
 event.
 
+<br>
+
 ### 13.4 Event Type: `session.terminated`
 
 **Stability:** Stable
@@ -2369,6 +2377,8 @@ the session's audit records.
 | `event_count` | integer | OPTIONAL | Total number of AILS events emitted during this session. |
 | `command_id` | string | OPTIONAL | Identifier of the termination command, if applicable. |
 
+<br>
+
 ### 13.5 Event Type: `session.init_failed`
 
 **Stability:** Stable
@@ -2388,6 +2398,9 @@ before the session reaches an operational state.
 | `failure_reason` | string | MUST | Reason for failure (e.g., `"authentication_failed"`, `"commander_not_provisioned"`, `"invalid_configuration"`, `"resource_unavailable"`). |
 | `error_code` | string | OPTIONAL | Structured error code, if defined by the applicable standard. |
 | `failed_at` | string | MUST | ISO 8601 UTC timestamp of the failure. |
+
+<br>
+
 ## SECTION 14: CATEGORY — CREDENTIAL EVENTS
 
 *Normative*
@@ -2409,6 +2422,8 @@ Control (AGBAC) specification.
 - ALS Section 5 (Session Credential Protocol)
 - ALS Section 5.5 (Credential Renewal Protocol)
 - AGBAC Section 5 (Delegation Token Requirements)
+
+<br>
 
 ### 14.2 Event Type: `credential.issued`
 
@@ -2448,6 +2463,8 @@ tokens, passwords, and raw certificate content — MUST NOT be included
 in credential events. Only fingerprints, identifiers, and metadata
 about the credential are permitted.
 
+<br>
+
 ### 14.3 Event Type: `credential.renewed`
 
 **Stability:** Stable
@@ -2472,6 +2489,8 @@ previous one.
 | `ttl_remaining_at_renewal` | integer | OPTIONAL | Seconds remaining on the previous credential at the time of renewal. |
 | `session_id` | string | OPTIONAL | Session identifier, if applicable. |
 
+<br>
+
 ### 14.4 Event Type: `credential.refused`
 
 **Stability:** Stable
@@ -2494,6 +2513,8 @@ is refused by the issuing authority.
 | `credential_fingerprint_presented` | string | OPTIONAL | Fingerprint of the credential presented with the request, if any. |
 | `session_id` | string | OPTIONAL | Session identifier, if applicable. |
 | `session_state_at_refusal` | string | OPTIONAL | Session state at the time of refusal (e.g., `"HALTED"`, `"TERMINATED"`). |
+
+<br>
 
 ### 14.5 Event Type: `credential.expired`
 
@@ -2518,6 +2539,9 @@ fail-closed governance in ALS deployments.
 | `session_id` | string | OPTIONAL | Session identifier, if applicable. |
 | `renewal_attempted` | boolean | OPTIONAL | Whether a renewal was attempted before expiry. |
 | `last_renewal_at` | string | OPTIONAL | ISO 8601 UTC timestamp of the last successful renewal, if any. |
+
+<br>
+
 ## SECTION 15: CATEGORY — POLICY EVENTS
 
 *Normative*
@@ -2540,6 +2564,8 @@ and ACS.
 - AGBAC Section 7 (Authorization Model)
 - AGBAC Section 11 (Audit and Logging Requirements)
 - ACS Section 9 (Planning Authorization Enforcement Point)
+
+<br>
 
 ### 15.2 Event Type: `policy.decision`
 
@@ -2602,6 +2628,8 @@ be recorded. A decision event that records only the composite result
 without individual subject evaluations is non-conformant for AGBAC
 audit requirements.
 
+<br>
+
 ### 15.3 Event Type: `policy.violation`
 
 **Stability:** Stable
@@ -2626,6 +2654,8 @@ governance model, or that a constraint has been breached.
 | `resource_affected` | string | OPTIONAL | The resource affected by the violation. |
 | `action_taken` | string | OPTIONAL | Enforcement action taken in response. One of: `blocked`, `logged`, `alerted`, `session_halted`, `session_terminated`, `escalated`, `none`. |
 | `violating_entity` | string | OPTIONAL | Identity of the entity that caused the violation. |
+
+<br>
 
 ### 15.4 Event Type: `policy.escalation`
 
@@ -2653,6 +2683,9 @@ not an error condition.
 | `escalation_target` | string | OPTIONAL | Identity or role to which the escalation is directed. |
 | `auto_timeout_seconds` | integer | OPTIONAL | Seconds before the escalation auto-resolves (e.g., auto-deny). `null` if no auto-timeout. |
 | `session_id` | string | OPTIONAL | Session identifier, if the escalation is within a session context. |
+
+<br>
+
 ## SECTION 16: CATEGORY — SUPPLY CHAIN EVENTS
 
 *Normative*
@@ -2673,6 +2706,8 @@ of the AI Supply Chain Standard (AI-SCS).
 - AI-SCS Section 5 (ABOM — AI Bill of Materials & Provenance)
 - AI-SCS Section 6 (AI Artifact Integrity & Authenticity Assurance)
 - AI-SCS Section 7 (Continuous AI Supply Chain Validation)
+
+<br>
 
 ### 16.2 Event Type: `supplychain.abom_validated`
 
@@ -2707,6 +2742,8 @@ MUST contain:
 | `deviation_type` | string | MUST | One of: `undeclared`, `hash_mismatch`, `version_mismatch`, `missing`, `unauthorized`, `modified`. |
 | `description` | string | OPTIONAL | Human-readable description. |
 
+<br>
+
 ### 16.3 Event Type: `supplychain.artifact_verified`
 
 **Stability:** Stable
@@ -2734,6 +2771,8 @@ contain:
 | `signing_entity` | string | OPTIONAL | Identity of the entity that signed the trust assertion. |
 | `trust_assertion_valid` | boolean | OPTIONAL | Whether the trust assertion passed all validation checks. |
 
+<br>
+
 ### 16.4 Event Type: `supplychain.trust_assertion`
 
 **Stability:** Stable
@@ -2754,6 +2793,8 @@ or its validity status changes.
 | `validity_period_start` | string | OPTIONAL | Start of the assertion's validity period. |
 | `validity_period_end` | string | OPTIONAL | End of the assertion's validity period. |
 | `abom_reference` | string | OPTIONAL | Reference to the ABOM entry for this artifact. |
+
+<br>
 
 ### 16.5 Event Type: `supplychain.validation_failure`
 
@@ -2781,6 +2822,9 @@ contain:
 | `enforcement_action` | string | MUST | Action taken. One of: `blocked`, `disabled`, `reverted`, `failed_closed`, `alerted`, `logged`, `none`. |
 | `expected_state` | string | OPTIONAL | Expected state of the artifact (e.g., expected hash). |
 | `observed_state` | string | OPTIONAL | Observed state of the artifact (e.g., computed hash). |
+
+<br>
+
 ## SECTION 17: CATEGORY — INTEGRITY EVENTS
 
 *Normative*
@@ -2801,6 +2845,8 @@ of the MCP Integrity Standard.
 - MCP Integrity Standard Section 19 (Client Behavior and Policy Enforcement)
 - MCP Integrity Standard Section 8 (Tool Interface Fingerprinting)
 - MCP Integrity Standard Section 12 (Version Lineage)
+
+<br>
 
 ### 17.2 Event Type: `integrity.manifest_verified`
 
@@ -2836,6 +2882,8 @@ when present, MUST contain:
 | `message` | string | OPTIONAL | Human-readable description. |
 | `tool_name` | string | OPTIONAL | Affected tool name, if the error is tool-specific. |
 
+<br>
+
 ### 17.3 Event Type: `integrity.fingerprint_checked`
 
 **Stability:** Stable
@@ -2870,6 +2918,8 @@ contain:
 | `output_schema_match` | boolean | Whether the output schema digest matched. `null` if no output schema declared. |
 | `composite_match` | boolean | Whether the composite digest matched. |
 
+<br>
+
 ### 17.4 Event Type: `integrity.chain_validated`
 
 **Stability:** Stable
@@ -2902,6 +2952,8 @@ present, SHOULD contain:
 | `capabilities_changed` | boolean | Whether required capabilities changed. |
 | `side_effects_changed` | boolean | Whether side-effect declarations changed. |
 
+<br>
+
 ### 17.5 Event Type: `integrity.tofu_recorded`
 
 **Stability:** Stable
@@ -2917,6 +2969,8 @@ on first encounter in TOFU (Trust On First Use) mode.
 | `tool_name` | string | MUST | Name of the tool. |
 | `composite_digest` | string | MUST | The composite interface fingerprint that was cached. |
 | `recorded_at` | string | MUST | ISO 8601 UTC timestamp. |
+
+<br>
 
 ### 17.6 Event Type: `integrity.tofu_changed`
 
@@ -2936,6 +2990,9 @@ detects a mismatch against a previously cached TOFU value.
 | `detected_at` | string | MUST | ISO 8601 UTC timestamp of detection. |
 | `component_changes` | object | OPTIONAL | Per-component change details per REQ-17.3.2. |
 | `user_action` | string | OPTIONAL | Action taken by the user or policy. One of: `accepted`, `blocked`, `pending`. |
+
+<br>
+
 ## SECTION 18: CATEGORY — CAPABILITY EVENTS
 
 *Normative*
@@ -2960,6 +3017,8 @@ of the Agent Capability Standard (ACS).
 - ACS Section 10 (Execution Contract Specification)
 - ACS Section 11 (Audit Logging Requirements)
 
+<br>
+
 ### 18.2 Event Type: `capability.index_delivered`
 
 **Stability:** Stable
@@ -2981,6 +3040,8 @@ and delivered to a planner interface.
 | `domain_tags` | array of string | OPTIONAL | Domain tags represented in the index. |
 | `truncated` | boolean | OPTIONAL | Whether the index was truncated due to token budget constraints. |
 | `capabilities_excluded_count` | integer | OPTIONAL | Number of capabilities excluded by PAEP authorization (Level 2+). MUST NOT reveal which specific capabilities were excluded. |
+
+<br>
 
 ### 18.3 Event Type: `capability.paep_evaluated`
 
@@ -3021,6 +3082,8 @@ contain:
 full capability manifest content. Only the evaluation attributes and
 their match results are recorded.
 
+<br>
+
 ### 18.4 Event Type: `capability.manifest_delivered`
 
 **Stability:** Stable
@@ -3039,6 +3102,8 @@ contain:
 | `semantic_quality` | string | MUST | Semantic quality designation (`OPERATIONAL` or `OUTCOME`). |
 | `delivered_at` | string | MUST | ISO 8601 UTC timestamp. |
 
+<br>
+
 ### 18.5 Event Type: `capability.selected`
 
 **Stability:** Stable
@@ -3055,6 +3120,8 @@ triggering execution contract issuance.
 | `risk_class` | string | MUST | Risk classification of the selected capability. |
 | `confirmation_required` | boolean | MUST | Whether the capability requires confirmation before execution. |
 | `selected_at` | string | MUST | ISO 8601 UTC timestamp. |
+
+<br>
 
 ### 18.6 Event Type: `capability.contract_issued`
 
@@ -3078,6 +3145,8 @@ selected capability.
 | `expires_at` | string | MUST | ISO 8601 UTC timestamp of contract expiry. |
 | `provider_ref` | string | OPTIONAL | Opaque reference to the resolved provider. |
 
+<br>
+
 ### 18.7 Event Type: `capability.executed`
 
 **Stability:** Stable
@@ -3100,6 +3169,8 @@ source system via a valid Execution Contract.
 | `latency` | object | OPTIONAL | Timing details per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. Present when `status` is `error`, `timeout`, or `denied`. |
 
+<br>
+
 ### 18.8 Event Type: `capability.execution_failed`
 
 **Stability:** Stable
@@ -3118,6 +3189,9 @@ failure, or source system error.
 | `failure_reason` | string | MUST | Reason for failure. One of: `contract_expired`, `paep_denied`, `parameter_invalid`, `source_unreachable`, `source_error`, `confirmation_missing`, `custom`. |
 | `failed_at` | string | MUST | ISO 8601 UTC timestamp. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. |
+
+<br>
+
 ## SECTION 19: CATEGORY — CONTROL EVENTS
 
 *Normative*
@@ -3138,6 +3212,8 @@ watchdog, and push notification components of the Agent Layer Security
 - ALS Section 8 (Control Channel Protocol)
 - ALS Section 9 (Watchdog Mechanism)
 - ALS Section 10 (Push Notification Protocol)
+
+<br>
 
 ### 19.2 Event Type: `control.command_received`
 
@@ -3163,6 +3239,8 @@ channel from an authorized or unauthorized commander.
 | `rejection_reason` | string | OPTIONAL | Reason for rejection, if applicable. One of: `replay_detected`, `invalid_signature`, `unauthorized`, `invalid_session`, `capability_not_supported`, `rate_limited`, `timestamp_invalid`, `custom`. |
 | `signature_valid` | boolean | OPTIONAL | Whether the command signature was verified. |
 
+<br>
+
 ### 19.3 Event Type: `control.command_executed`
 
 **Stability:** Stable
@@ -3187,6 +3265,8 @@ produces a state transition.
 | `termination_class` | string | OPTIONAL | Classification. One of: `policy_violation`, `security_incident`, `decommission`, `test`. Present when `command_type` is `terminate`. |
 | `reviewed_by` | string | OPTIONAL | Identity of the human reviewer who authorized the command. Present when `command_type` is `resume`. |
 
+<br>
+
 ### 19.4 Event Type: `control.channel_connected`
 
 **Stability:** Stable
@@ -3201,6 +3281,8 @@ established between a commander and the governance service.
 | `commander_id` | string | MUST | Identity of the connecting commander. |
 | `connected_at` | string | MUST | ISO 8601 UTC timestamp. |
 | `authentication_method` | string | OPTIONAL | Authentication method used (e.g., `"mtls"`, `"commander_certificate"`). |
+
+<br>
 
 ### 19.5 Event Type: `control.channel_disconnected`
 
@@ -3222,6 +3304,8 @@ contain:
 | `disconnect_reason` | string | MUST | Reason for disconnection. One of: `normal_close`, `network_error`, `authentication_failed`, `timeout`, `server_shutdown`, `unknown`. |
 | `reconnected_at` | string | OPTIONAL | ISO 8601 UTC timestamp of reconnection, if reconnection occurred before this event was emitted. |
 
+<br>
+
 ### 19.6 Event Type: `control.channel_auth_failed`
 
 **Stability:** Stable
@@ -3240,6 +3324,8 @@ fails.
 | `presented_certificate_fingerprint` | string | OPTIONAL | Fingerprint of the certificate presented, if any. |
 | `failure_reason` | string | MUST | Reason for failure. One of: `certificate_invalid`, `certificate_expired`, `certificate_unknown`, `certificate_revoked`, `no_certificate`, `custom`. |
 | `failed_at` | string | MUST | ISO 8601 UTC timestamp. |
+
+<br>
 
 ### 19.7 Event Type: `control.watchdog_triggered`
 
@@ -3264,6 +3350,8 @@ credential renewal within the configured watchdog window.
 | `resulting_state` | string | MUST | Session state after the watchdog halt (typically `"HALTED"`). |
 | `agent_identity` | string | OPTIONAL | Identity of the governed agent. |
 
+<br>
+
 ### 19.8 Event Type: `control.push_notification_sent`
 
 **Stability:** Stable
@@ -3287,6 +3375,8 @@ contain:
 | `sent_at` | string | MUST | ISO 8601 UTC timestamp. |
 | `push_channel_active` | boolean | MUST | Whether the push notification channel was active at send time. |
 
+<br>
+
 ### 19.9 Event Type: `control.push_notification_acked`
 
 **Stability:** Stable
@@ -3303,6 +3393,8 @@ contain:
 | `session_id` | string | MUST | Session identifier. |
 | `acknowledged_at` | string | MUST | ISO 8601 UTC timestamp of acknowledgment. |
 | `acknowledgment_latency_ms` | integer | OPTIONAL | Time in milliseconds between notification send and acknowledgment. |
+
+<br>
 
 ### 19.10 Event Type: `control.push_notification_unacked`
 
@@ -3325,6 +3417,8 @@ contain:
 | `detected_at` | string | MUST | ISO 8601 UTC timestamp when the timeout was detected. |
 | `notification_type` | string | MUST | Type of the unacknowledged notification. |
 | `severity` | string | OPTIONAL | Severity of the unacknowledged notification (e.g., `"high"` for security-severity halt notifications). |
+
+<br>
 
 ### 19.11 Event Type: `control.conflicting_commands`
 
@@ -3352,6 +3446,8 @@ contain:
 | `resolution` | string | MUST | Which command was applied (e.g., `"halt_over_resume"`, `"terminate_over_halt"`). |
 | `resolved_at` | string | MUST | ISO 8601 UTC timestamp. |
 
+<br>
+
 ### 19.12 Event Type: `control.replay_detected`
 
 **Stability:** Stable
@@ -3370,6 +3466,9 @@ rejected.
 | `commander_id` | string | MUST | Identity of the presenting commander. |
 | `original_nonce` | string | MUST | The nonce that was previously processed. |
 | `detected_at` | string | MUST | ISO 8601 UTC timestamp. |
+
+<br>
+
 ## SECTION 20: CATEGORY — AGENT-TO-AGENT PROTOCOL EVENTS
 
 *Normative*
@@ -3391,6 +3490,8 @@ message exchange, Agent Card discovery, and A2A-specific authentication
 
 **Protocol References:**
 - Google Agent-to-Agent Protocol (A2A), RC v1.0
+
+<br>
 
 ### 20.2 Event Type: `a2a.task_created`
 
@@ -3438,6 +3539,8 @@ to another. A2A defines the following task statuses: `submitted`,
 | `artifact_count` | integer | OPTIONAL | Number of artifacts included, if any. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. Present when `new_status` is `failed`. |
 
+<br>
+
 ### 20.4 Event Type: `a2a.message_sent`
 
 **Stability:** Stable
@@ -3461,6 +3564,8 @@ additional input messages, and task update messages.
 | `content_types` | array of string | OPTIONAL | MIME types of the content parts (e.g., `"text/plain"`, `"application/json"`, `"image/png"`). |
 | `content_summary` | string | OPTIONAL | Summary of the message content. Subject to redaction. |
 | `has_artifacts` | boolean | OPTIONAL | Whether the message includes artifacts. |
+
+<br>
 
 ### 20.5 Event Type: `a2a.message_received`
 
@@ -3486,6 +3591,8 @@ agent over the A2A protocol.
 | `has_artifacts` | boolean | OPTIONAL | Whether the message includes artifacts. |
 | `streaming` | boolean | OPTIONAL | Whether the message was received via SSE streaming. Default: `false`. |
 
+<br>
+
 ### 20.6 Event Type: `a2a.agent_card_discovered`
 
 **Stability:** Stable
@@ -3510,6 +3617,8 @@ capabilities evaluated.
 | `authentication_schemes` | array of string | OPTIONAL | Authentication schemes supported by the remote agent (e.g., `"bearer"`, `"oauth2"`, `"apiKey"`). |
 | `a2a_version` | string | OPTIONAL | A2A protocol version supported by the remote agent. |
 
+<br>
+
 ### 20.7 Event Type: `a2a.authentication`
 
 **Stability:** Stable
@@ -3531,6 +3640,8 @@ credential exchange between agents.
 | `failure_reason` | string | OPTIONAL | Reason for failure. Present when `result` is not `success`. |
 | `token_type` | string | OPTIONAL | Type of token used (e.g., `"jwt"`, `"opaque"`). |
 
+<br>
+
 ## SECTION 21: CATEGORY — SYSTEM EVENTS
 
 *Normative*
@@ -3542,6 +3653,8 @@ configuration changes, logging degradation, and retention actions. These
 events provide operational awareness of the AILS logging infrastructure
 itself and of the systems that produce AILS events. System events
 ensure that the observability and audit system is itself observable.
+
+<br>
 
 ### 21.2 Event Type: `system.alert`
 
@@ -3564,6 +3677,8 @@ required operator attention.
 | `triggering_pattern` | string | OPTIONAL | Description of the event pattern that triggered the alert. |
 | `alert_destination` | string | OPTIONAL | Where the alert was delivered (e.g., `"webhook"`, `"syslog"`, `"smtp"`, `"pagerduty"`). |
 | `auto_action_taken` | string | OPTIONAL | Automated action taken in response. One of: `none`, `session_halted`, `capability_disabled`, `escalation_triggered`, `custom`. |
+
+<br>
 
 ### 21.3 Event Type: `system.health`
 
@@ -3595,6 +3710,8 @@ monitored AI system component.
 | `error_rate_percent` | number | Error rate as a percentage. |
 | `uptime_seconds` | number | Time since component startup. |
 
+<br>
+
 ### 21.4 Event Type: `system.configuration_changed`
 
 **Stability:** Stable
@@ -3614,6 +3731,8 @@ conformance level.
 | `new_value` | string | OPTIONAL | New configuration value. MUST NOT contain credentials or secrets. |
 | `changed_at` | string | MUST | ISO 8601 UTC timestamp. |
 | `changed_by` | string | OPTIONAL | Identity of the entity that made the change. |
+
+<br>
 
 ### 21.5 Event Type: `system.log_degraded`
 
@@ -3642,6 +3761,8 @@ transport unavailability, or latency exceeding acceptable thresholds.
 | `action_taken` | string | OPTIONAL | Response to the degradation. One of: `buffering`, `sampling`, `halted_execution`, `alert_sent`, `none`. |
 | `resolved_at` | string | OPTIONAL | ISO 8601 UTC timestamp when degradation was resolved. `null` if ongoing. |
 
+<br>
+
 ### 21.6 Event Type: `system.retention_action`
 
 **Stability:** Stable
@@ -3663,6 +3784,8 @@ have reached the end of their retention period.
 | `executed_by` | string | OPTIONAL | Identity of the entity or automated process that executed the action. |
 | `session_ids_affected` | array of string | OPTIONAL | Session identifiers of affected events, if applicable. |
 | `reason` | string | OPTIONAL | Reason for the retention action (e.g., `"retention_period_expired"`, `"regulatory_requirement"`, `"storage_reclamation"`). |
+
+<br>
 
 ### 21.7 Event Type: `system.budget_exceeded`
 
@@ -3688,6 +3811,8 @@ that may or may not block further operations depending on policy.
 | `action_taken` | string | MUST | Response to the threshold crossing. One of: `alert_only`, `throttled`, `blocked`, `none`. |
 | `scope_identifier` | string | OPTIONAL | Identifier of the scoped entity (session ID, agent ID, tenant ID). |
 
+<br>
+
 ### 21.8 Event Type: `system.quota_exhausted`
 
 **Stability:** Stable
@@ -3712,6 +3837,8 @@ and system-imposed limits.
 | `affected_operations` | array of string | OPTIONAL | Types of operations affected (e.g., `"inference"`, `"embedding"`, `"tool_calls"`). |
 | `action_taken` | string | MUST | Response. One of: `queued`, `retrying`, `failed`, `fallback`, `alert_only`. |
 
+<br>
+
 ## SECTION 22: INTEGRITY AND TAMPER-EVIDENCE REQUIREMENTS
 
 *Normative*
@@ -3725,6 +3852,8 @@ hash-chained events at Level 3. The integrity mechanisms defined here
 satisfy the tamper-evidence requirements of ALS, ACS, and other
 standards that mandate auditable, verifiable event records.
 
+<br>
+
 ### 22.2 Integrity Levels Overview
 
 | Level | Integrity Mechanism | Use Case |
@@ -3732,6 +3861,8 @@ standards that mandate auditable, verifiable event records.
 | Level 1 | None. Structured telemetry only. | Developer observability, debugging, cost tracking. |
 | Level 2 | Sequence numbering and chain hashing. | Enterprise audit trails, compliance logging, governance records. |
 | Level 3 | Level 2 plus cryptographic event signing. | Regulatory compliance, forensic evidence, high-risk AI system audit. |
+
+<br>
 
 ### 22.3 Level 1: Structured Telemetry
 
@@ -3746,11 +3877,15 @@ guarantees are provided.
 Envelope specification (Section 5). The absence of integrity fields
 does not exempt events from other envelope requirements.
 
+<br>
+
 ### 22.4 Level 2: Tamper-Evident Events
 
 **REQ-22.4.1:** `[Level 2+]` Every AILS Event MUST include the
 `integrity` object containing `sequence_number`, `stream_id`, and
 `chain_hash` fields.
+
+<br>
 
 #### 22.4.1 Sequence Numbering
 
@@ -3768,6 +3903,8 @@ anomalies and SHOULD log a `system.alert` event when a gap is detected.
 the same `stream_id`. If an event stream is terminated (e.g., session
 ended), a new stream with a new `stream_id` MUST be created for
 subsequent events.
+
+<br>
 
 #### 22.4.2 Event Stream Scope
 
@@ -3790,6 +3927,8 @@ MUST maintain independent sequence numbering and chain hashing.
 `stream_id` SHOULD be identical to the `correlation.session_id`. When
 the stream scope is per-emitter, the `stream_id` SHOULD be identical
 to the `emitter.id`.
+
+<br>
 
 #### 22.4.3 Chain Hash Construction
 
@@ -3828,6 +3967,8 @@ reordering of events in the stream.
 result in a `system.alert` event with severity `critical` and alert
 name `chain_hash_integrity_failure`.
 
+<br>
+
 ### 22.5 Level 3: Signed Events
 
 **REQ-22.5.1:** `[Level 3]` Every AILS Event MUST include, in addition
@@ -3862,6 +4003,8 @@ organization. Key management guidance is provided in Appendix D.
 MUST result in a `system.alert` event with severity `critical` and
 alert name `event_signature_verification_failure`.
 
+<br>
+
 ### 22.6 Integrity and Event Emission Ordering
 
 **REQ-22.6.1:** `[Level 2+]` Events within a single event stream MUST
@@ -3875,6 +4018,8 @@ hash for an event because the previous event's chain hash is unknown
 stream with a new `stream_id` and sequence number starting at 1. The
 Emitter MUST emit a `system.alert` event with alert name
 `event_stream_discontinuity` in the new stream.
+
+<br>
 
 ### 22.7 Integrity and Storage
 
@@ -3899,6 +4044,9 @@ accessible for modification or deletion by the AI agents, governed
 agents, or planners whose behavior the events record. Audit
 infrastructure MUST require separate authentication credentials from
 the systems it monitors.
+
+<br>
+
 ## SECTION 23: PROVENANCE AND DATA CLASSIFICATION
 
 *Normative*
@@ -3915,6 +4063,8 @@ requirements of the Deterministic Agent Execution (DAE) standard.
 **Cross-Standard References:**
 - DAE Section 4.6 (Provenance Enforcement)
 - DAE Section 3.3 (Data Is Never Authority)
+
+<br>
 
 ### 23.2 Classification Values
 
@@ -3967,6 +4117,8 @@ Examples of EXTERNAL_UNTRUSTED sources:
 - RAG retrieval results from external knowledge bases
 - Tool call results from external services
 
+<br>
+
 ### 23.3 Classification Rules
 
 **REQ-23.3.1:** The `data_classification` MUST be assigned by the
@@ -3992,6 +4144,8 @@ as EXTERNAL_UNTRUSTED, regardless of other inputs.
 **REQ-23.3.4:** When the trust level of an event source cannot be
 determined, the Emitter MUST assign `EXTERNAL_UNTRUSTED`.
 
+<br>
+
 ### 23.4 Provenance and Authority
 
 **REQ-23.4.1:** AILS Events classified as `EXTERNAL_UNTRUSTED` MUST
@@ -4004,6 +4158,8 @@ DAE enforces the authority boundary.
 Events SHOULD use the `data_classification` field to filter, weight,
 or flag events based on provenance before incorporating event data into
 decision-making processes.
+
+<br>
 
 ### 23.5 Provenance in Multi-Hop Workflows
 
@@ -4025,6 +4181,9 @@ not on the ALS service's own trust level. The ALS service's own
 operational events (e.g., watchdog triggers, health checks) are
 SYSTEM_TRUSTED. Events recording agent-initiated actions influenced by
 external data are classified based on the data's provenance.
+
+<br>
+
 ## SECTION 24: PRIVACY, REDACTION, AND SENSITIVE DATA
 
 *Normative*
@@ -4037,6 +4196,8 @@ including user prompts, model outputs, personally identifiable
 information, reasoning chains, and credentials. AILS provides a
 normative framework for redaction that ensures events remain valid,
 parseable, and correlatable after sensitive fields are removed.
+
+<br>
 
 ### 24.2 Sensitive Data Categories
 
@@ -4056,6 +4217,8 @@ of this section:
 | `memory_content` | Content read from or written to memory stores. | `memory.read` payload `results.content_summary`, `memory.write` payload `data_summary` |
 | `human_identity` | Human user identifiers and identity attributes. | `actor.human_identity.subject`, `human.confirmation` payload `reviewer_id` |
 | `business_data` | Business-sensitive data in event payloads. | Financial figures, customer records, proprietary information in tool outputs. |
+
+<br>
 
 ### 24.3 Default Redaction Requirements
 
@@ -4095,6 +4258,8 @@ be required by any conformance level. Chain-of-thought and internal
 reasoning are sensitive intellectual property and safety-relevant data.
 The `reasoning.disclosure` value `hidden` is always a conformant state.
 
+<br>
+
 ### 24.4 Redaction Methods
 
 **REQ-24.4.1:** When a field is redacted, the implementation MUST apply
@@ -4117,6 +4282,8 @@ hexadecimal string prefixed with `sha256:`.
 MUST preserve no more than the first 100 characters of the original
 value by default. The truncation length MUST be configurable.
 
+<br>
+
 ### 24.5 Redaction Profiles
 
 **REQ-24.5.1:** Implementations MUST support named redaction profiles
@@ -4138,6 +4305,8 @@ prohibition on credential material (REQ-24.3.2).
 `redaction.profile` field of every event to which redaction has been
 applied.
 
+<br>
+
 ### 24.6 Redaction and Event Validity
 
 **REQ-24.6.1:** An AILS Event with all sensitive fields redacted MUST
@@ -4154,6 +4323,8 @@ MUST still be present in the event with its redaction replacement value
 fields that have been redacted, using JSON path notation
 (e.g., `"payload.input.content"`, `"actor.human_identity.subject"`).
 
+<br>
+
 ### 24.7 Redaction and Integrity
 
 **REQ-24.7.1:** `[Level 2+]` Chain hashing and event signing MUST be
@@ -4167,6 +4338,8 @@ the hash of the original content provides a binding between the redacted
 event and the original content. If the original content is retained in
 a separate secure store, the hash enables verification that the redacted
 event corresponds to the retained content.
+
+<br>
 
 ### 24.8 Prompt and Completion Logging Guidance
 
@@ -4182,6 +4355,9 @@ completion content should consider the following:
 - The `hashed` redaction method enables prompt/completion matching
   (e.g., detecting identical prompts across sessions) without
   retaining content.
+
+<br>
+
 ## SECTION 25: RETENTION REQUIREMENTS
 
 *Normative*
@@ -4193,6 +4369,8 @@ Retention requirements ensure that audit trails, governance records, and
 telemetry data are available for forensic analysis, compliance
 verification, and incident response for the duration required by
 applicable standards and regulations.
+
+<br>
 
 ### 25.2 Retention Tiers
 
@@ -4214,6 +4392,8 @@ minimum retention period or any applicable regulatory requirement.
 Governance tier period (3 years) at Level 2 and above, and for at least
 the Standard tier period (90 days) at Level 1.
 
+<br>
+
 ### 25.3 Retention and Session Boundaries
 
 **REQ-25.3.1:** For events associated with a governance session
@@ -4229,6 +4409,8 @@ period begins at event emission timestamp.
 session contains both telemetry events and audit events), all events
 in the session MUST be retained for the longest applicable retention
 period.
+
+<br>
 
 ### 25.4 Retention Actions
 
@@ -4248,6 +4430,8 @@ external system), and `deleted` (permanently removed). The `extended`
 action type indicates that the retention period was extended beyond the
 standard minimum.
 
+<br>
+
 ### 25.5 Retention Configuration
 
 **REQ-25.5.1:** Retention periods MUST be configurable per event
@@ -4261,6 +4445,8 @@ conformance level.
 
 **REQ-25.5.3:** `[Level 2+]` The retention configuration MUST be
 documented in the implementation's conformance claim.
+
+<br>
 
 ### 25.6 Cross-Standard Retention Alignment
 
@@ -4277,6 +4463,9 @@ following external standard requirements:
 implement ALS, ACS, or other standards with retention requirements MUST
 apply the most restrictive retention period across all applicable
 standards.
+
+<br>
+
 ## SECTION 26: MULTI-TENANT ISOLATION
 
 *Normative*
@@ -4293,6 +4482,8 @@ logging infrastructure.
 - DAE Section 4.8 (Optional Multi-Tenant Isolation)
 - ALS Section 5.3 (Credential binding to tenant)
 
+<br>
+
 ### 26.2 Multi-Tenant Deployment Detection
 
 **REQ-26.2.1:** A deployment is classified as multi-tenant when two or
@@ -4305,6 +4496,8 @@ in Section 5.11 MUST be present on every AILS Event.
 
 **REQ-26.2.3:** In single-tenant deployments, the `tenant` object MAY
 be absent.
+
+<br>
 
 ### 26.3 Tenant Identifier Requirements
 
@@ -4321,6 +4514,8 @@ balancers) MUST carry the `tenant_id` of the tenant whose request or
 action triggered the event. Infrastructure events that are not
 attributable to a specific tenant (e.g., system health checks) MUST use
 a reserved tenant identifier of `"_system"`.
+
+<br>
 
 ### 26.4 Isolation Requirements
 
@@ -4348,6 +4543,8 @@ MUST be restricted to infrastructure operators with explicitly granted
 cross-tenant privileges and MUST be logged as `system.alert` events
 with severity `high`.
 
+<br>
+
 ### 26.5 Tenant Boundary Violations
 
 **REQ-26.5.1:** An attempt to emit an event with a `tenant_id` that
@@ -4358,6 +4555,9 @@ event with `violation_type` of `tenant_boundary_crossed`.
 **REQ-26.5.2:** An attempt to query or access events belonging to a
 tenant other than the authenticated tenant context MUST be denied and
 logged.
+
+<br>
+
 ## SECTION 27: ALERT CONDITION BINDINGS
 
 *Normative*
@@ -4370,6 +4570,8 @@ conditions bridge the gap between passive logging and active
 operational awareness. When a defined pattern is detected, a
 `system.alert` event MUST be emitted in addition to the triggering
 events themselves.
+
+<br>
 
 ### 27.2 Mandatory Alert Conditions
 
@@ -4398,6 +4600,8 @@ implemented. Detection of any condition MUST result in emission of a
 | `replay_attack_detected` | high | A `control.replay_detected` event is emitted. | AILS §19 |
 | `execution_without_confirmation` | critical | A `capability.executed` event is emitted for a capability with `confirmation_required: true` without a preceding `human.confirmation` event. | AILS §18/§11 |
 
+<br>
+
 ### 27.3 Alert Condition Detection
 
 **REQ-27.3.1:** `[Level 2+]` Alert conditions MUST be evaluated by the
@@ -4413,6 +4617,8 @@ the alert processor.
 **REQ-27.3.3:** `[Level 2+]` The `system.alert` event MUST include the
 `triggering_event_ids` field containing the `event_id` values of the
 events that triggered the alert condition.
+
+<br>
 
 ### 27.4 Alert Destinations
 
@@ -4432,6 +4638,8 @@ non-development deployments. An implementation with no external alert
 destination for critical alerts SHOULD emit a
 `system.configuration_changed` advisory at startup.
 
+<br>
+
 ### 27.5 Custom Alert Conditions
 
 **REQ-27.5.1:** Implementations MAY define custom alert conditions
@@ -4441,6 +4649,8 @@ alert names prefixed with `x-` followed by a reverse-domain namespace
 
 **REQ-27.5.2:** Custom alert conditions MUST NOT override or disable
 the mandatory alert conditions defined in REQ-27.2.1.
+
+<br>
 
 ### 27.6 Alert Suppression
 
@@ -4457,6 +4667,9 @@ suppressed.
 **REQ-27.6.3:** The suppression window MUST NOT exceed 300 seconds for
 `critical` severity alerts and MUST NOT exceed 3600 seconds for `high`
 severity alerts.
+
+<br>
+
 ## SECTION 28: CONFORMANCE
 
 *Normative*
@@ -4466,6 +4679,8 @@ severity alerts.
 AILS defines three conformance levels. Levels are cumulative: Level 2
 requires all Level 1 requirements; Level 3 requires all Level 2
 requirements.
+
+<br>
 
 ### 28.2 Level 1 — Structured Telemetry
 
@@ -4505,6 +4720,8 @@ capabilities.
 - "AILS tamper-evident logging is in effect"
 - "This implementation satisfies EU AI Act Article 12 logging
   requirements via AILS"
+
+<br>
 
 ### 28.3 Level 2 — Governed Audit
 
@@ -4549,6 +4766,8 @@ event signing capabilities.
 - "AILS events are cryptographically signed"
 - "AILS events provide non-repudiation"
 
+<br>
+
 ### 28.4 Level 3 — Certified Audit
 
 **REQ-28.4.1:** A Level 3 conformant implementation MUST satisfy all
@@ -4572,6 +4791,8 @@ implement:
   requirements via AILS"
 - "This implementation satisfies NIST AI RMF MEASURE 2.6 logging
   requirements via AILS"
+
+<br>
 
 ### 28.5 Cross-Standard Conformance
 
@@ -4599,6 +4820,8 @@ use the format:
 requirements of ALS v2.0.0 (session and credential events only)"
 ```
 
+<br>
+
 ### 28.6 Conformance Test Categories
 
 **REQ-28.6.1:** A conformance test suite MUST include at minimum one
@@ -4621,6 +4844,8 @@ test per category:
 | T-SIGNING | Event signatures are correctly computed and verifiable; invalid signatures are detected | L3 |
 | T-CROSSSTANDARD | All event types mapped to a claimed external standard are implemented with correct payloads | L2 |
 
+<br>
+
 ### 28.7 Partial Conformance
 
 **REQ-28.7.1:** An implementation satisfying a subset of requirements
@@ -4636,6 +4861,8 @@ Level [N] conformance."
 implies full Level 1 conformance. "AILS Level 2 conformant" implies
 full Level 2 conformance.
 
+<br>
+
 ### 28.8 Self-Assessment vs. Third-Party Audit
 
 **REQ-28.8.1:** Level 1 and Level 2 conformance MAY be claimed on the
@@ -4645,6 +4872,9 @@ based on self-assessment or third-party audit.
 **REQ-28.8.2:** Deployments using AILS to satisfy EU AI Act Article 12
 logging requirements for high-risk AI systems SHOULD obtain third-party
 audit of Level 3 conformance.
+
+<br>
+
 ## SECTION 29: RELATIONSHIP TO OTHER STANDARDS
 
 *Informative*
@@ -4666,6 +4896,8 @@ adoption; AILS events may be transported by any mechanism.
 OpenTelemetry identifiers (REQ-5.6.2). This ensures zero-transformation
 interoperability when AILS events are exported to OpenTelemetry.
 
+<br>
+
 ### 29.2 Deterministic Agent Execution (DAE)
 
 AILS provides the audit logging layer for DAE implementations. The
@@ -4682,6 +4914,8 @@ following AILS event categories map to DAE audit requirements:
 
 DAE implementations emitting AILS Level 2 events satisfy DAE Section 3.9
 (Formal Compliance and Certification) audit requirements.
+
+<br>
 
 ### 29.3 Agent-Based Access Control (AGBAC)
 
@@ -4700,6 +4934,8 @@ AGBAC implementations emitting AILS events satisfy AGBAC Section 11
 (Audit and Logging Requirements) when the `policy.decision` event
 payload includes both individual subject evaluation results per
 REQ-15.2.4.
+
+<br>
 
 ### 29.4 Agent Layer Security (ALS)
 
@@ -4735,6 +4971,8 @@ mapping between ALS audit events and AILS events is comprehensive:
 ALS implementations emitting AILS Level 2 events satisfy ALS Section 12
 (Audit Requirements) when all mapped event types are implemented.
 
+<br>
+
 ### 29.5 AI Supply Chain Standard (AI-SCS)
 
 AILS provides the audit logging layer for AI-SCS implementations:
@@ -4750,6 +4988,8 @@ AILS provides the audit logging layer for AI-SCS implementations:
 AI-SCS Level 3 (Continuous Assurance) implementations emitting AILS
 Level 2 events satisfy AI-SCS audit requirements across all three
 control domains.
+
+<br>
 
 ### 29.6 Agent Capability Standard (ACS)
 
@@ -4774,6 +5014,8 @@ mapping between ACS audit events and AILS events is:
 ACS implementations emitting AILS Level 2 events satisfy ACS Section 11
 (Audit Logging Requirements) at ACS Level 2.
 
+<br>
+
 ### 29.7 MCP Integrity Standard
 
 AILS provides the verification event logging for MCP Integrity Standard
@@ -4792,6 +5034,8 @@ implementations:
 MCP Integrity Standard client implementations emitting AILS events
 satisfy MCP Integrity Standard Section 19.3 (Audit Logging).
 
+<br>
+
 ### 29.8 EU AI Act (Regulation 2024/1689)
 
 | AILS Element | EU AI Act Requirement |
@@ -4806,6 +5050,8 @@ satisfy MCP Integrity Standard Section 19.3 (Audit Logging).
 AILS Level 3 provides the technical logging infrastructure for high-risk
 AI systems under EU AI Act Title III.
 
+<br>
+
 ### 29.9 NIST AI Risk Management Framework (AI RMF 1.0)
 
 | AILS Element | NIST AI RMF Function |
@@ -4815,6 +5061,8 @@ AI systems under EU AI Act Title III.
 | Alert conditions (§27) | MANAGE 2.2 — response mechanisms |
 | Integrity (§22) | GOVERN 2.1 — accountability mechanisms |
 | Retention (§25) | MEASURE 4.1 — post-deployment monitoring |
+
+<br>
 
 ### 29.10 Google Agent-to-Agent Protocol (A2A)
 
@@ -4843,6 +5091,8 @@ events (Section 18) and A2A discovery events are correlated via the
 shared `correlation.trace_id`, enabling end-to-end tracing from
 Agent Card discovery through capability governance to task execution.
 
+<br>
+
 ### 29.11 Model Context Protocol (MCP)
 
 AILS records MCP-related telemetry through tool events (Section 9) and
@@ -4850,6 +5100,9 @@ integrity events (Section 17). AILS does not modify MCP protocol
 semantics. MCP tool invocations are recorded as `tool.call` events with
 `tool_type: mcp_tool`. MCP tool discovery is recorded as
 `tool.discovery` events with `source: mcp_server`.
+
+<br>
+
 ## SECTION 30: VERSIONING AND STANDARD EVOLUTION
 
 *Normative*
@@ -4864,6 +5117,8 @@ the full semantic version string.
 
 **REQ-30.1.3:** AILS implementations SHALL NOT use pre-release version
 identifiers in production deployments.
+
+<br>
 
 ### 30.2 Breaking Change Definition
 
@@ -4898,6 +5153,9 @@ increment):
 (c) Updating informative references
 (d) Adding informative examples
 
+
+<br>
+
 ### 30.3 Event Type Lifecycle
 
 **REQ-30.3.1:** Event types progress through the following lifecycle:
@@ -4916,6 +5174,8 @@ The minimum deprecation period is one MINOR version cycle.
 **REQ-30.3.3:** Implementations SHOULD log a warning when emitting
 events of a deprecated event type.
 
+<br>
+
 ### 30.4 Forward Compatibility
 
 **REQ-30.4.1:** Consumers of AILS Events MUST ignore unrecognized
@@ -4930,6 +5190,8 @@ events with `ails_version: "1.1.0"` or `"1.2.0"`.
 **REQ-30.4.3:** Consumers MAY reject events with a different MAJOR
 version. Cross-major-version compatibility is not guaranteed.
 
+<br>
+
 ### 30.5 Deprecation Procedure
 
 **REQ-30.5.1:** When an event type, envelope field, or conformance
@@ -4942,6 +5204,8 @@ requirement is deprecated, the deprecation notice MUST include:
 
 **REQ-30.5.2:** Deprecated items MUST remain functional in all versions
 within the same MAJOR version as their deprecation.
+
+<br>
 
 ### 30.6 Extension Mechanism
 
@@ -5189,6 +5453,9 @@ All conformant AILS Events MUST validate against this schema.
   "additionalProperties": false
 }
 ```
+
+<br>
+
 ## APPENDIX B: EVENT TYPE REGISTRY
 
 *Normative*
@@ -5278,6 +5545,9 @@ types defined by this version of the standard.
 | `system.quota_exhausted` | 21.8 | Stable | L1 |
 
 **Total event types defined:** 73
+
+<br>
+
 ## APPENDIX C: OPENTELEMETRY MAPPING
 
 *Informative*
@@ -5289,6 +5559,8 @@ constructs. This mapping enables AILS events to be exported into
 OpenTelemetry-compatible backends without loss of semantic information.
 This mapping is informative; AILS does not require OpenTelemetry
 adoption.
+
+<br>
 
 ### C.2 Envelope to OTEL Mapping
 
@@ -5310,6 +5582,8 @@ adoption.
 | `data_classification` | Span attribute | `ails.data_classification` |
 | `tenant.tenant_id` | Resource attribute | `ails.tenant.id` |
 
+<br>
+
 ### C.3 Event Type to OTEL Signal Mapping
 
 | AILS Category | Recommended OTEL Signal | Rationale |
@@ -5329,6 +5603,8 @@ adoption.
 | `control.*` | Log Record | Control events are discrete command/response pairs. |
 | `system.*` | Log Record | System events are discrete status reports. |
 
+<br>
+
 ### C.4 Payload to OTEL Attributes
 
 AILS payload fields SHOULD be mapped to OTEL span attributes or log
@@ -5341,6 +5617,8 @@ ails.inference.model.name = "gpt-4.1"
 ails.inference.status = "success"
 ails.inference.usage.total_tokens = 1500
 ```
+
+<br>
 
 ### C.5 Metadata to OTEL Metrics
 
@@ -5355,12 +5633,17 @@ aggregation and alerting:
 | `payload.usage.input_tokens` | `ails.inference.tokens.input` | Counter |
 | `payload.usage.output_tokens` | `ails.inference.tokens.output` | Counter |
 
+<br>
+
 ### C.6 Integrity Fields
 
 AILS integrity fields (`sequence_number`, `chain_hash`,
 `event_signature`) SHOULD be mapped to OTEL log record attributes but
 are not candidates for span attributes, as they are event-level
 properties, not operation-level properties.
+
+<br>
+
 ## APPENDIX D: REDACTION PROFILES AND KEY MANAGEMENT GUIDANCE
 
 *Informative*
@@ -5369,6 +5652,8 @@ properties, not operation-level properties.
 
 The following tables define the field-level behavior of each standard
 redaction profile.
+
+<br>
 
 #### D.1.1 `default` Profile
 
@@ -5384,6 +5669,8 @@ redaction profile.
 | `memory_content` | omitted | Replaced with `"[REDACTED]"` |
 | `human_identity` | retained | Subject identifiers retained |
 | `business_data` | retained | Business data retained |
+
+<br>
 
 #### D.1.2 `minimal` Profile
 
@@ -5404,6 +5691,8 @@ redaction profile.
 debugging environments only. It SHOULD NOT be used in production
 deployments that process real user data or PII.
 
+<br>
+
 #### D.1.3 `strict` Profile
 
 | Sensitive Category | Method | Behavior |
@@ -5418,6 +5707,8 @@ deployments that process real user data or PII.
 | `memory_content` | omitted | Replaced with `"[REDACTED]"` |
 | `human_identity` | hashed | SHA-256 hash of identifier |
 | `business_data` | omitted | Replaced with `"[REDACTED]"` |
+
+<br>
 
 #### D.1.4 `regulatory` Profile
 
@@ -5434,10 +5725,14 @@ deployments that process real user data or PII.
 | `human_identity` | omitted | Replaced with `"[REDACTED]"` (except `reviewer_id` in confirmation events, which is hashed) |
 | `business_data` | omitted | Replaced with `"[REDACTED]"` |
 
+<br>
+
 ### D.2 Key Management Guidance (Level 3)
 
 The following guidance applies to deployments implementing Level 3
 event signing.
+
+<br>
 
 #### D.2.1 Key Generation
 
@@ -5447,6 +5742,8 @@ event signing.
   equivalent secure key management system.
 - Key generation in software is permitted for development environments
   only.
+
+<br>
 
 #### D.2.2 Key Storage
 
@@ -5459,6 +5756,8 @@ event signing.
   Google Cloud KMS, HashiCorp Vault) are RECOMMENDED for production
   deployments.
 
+<br>
+
 #### D.2.3 Key Rotation
 
 - Signing keys SHOULD be rotated at intervals not exceeding one year.
@@ -5466,6 +5765,8 @@ event signing.
   verification of events signed with it for the full retention period
   of those events.
 - Key rotation MUST emit a `system.configuration_changed` event.
+
+<br>
 
 #### D.2.4 Key Revocation
 
@@ -5477,12 +5778,17 @@ event signing.
   deleted, as the event content remains valid even if the signature
   is no longer trustworthy.
 
+<br>
+
 #### D.2.5 Key Discovery
 
 - Public keys for signature verification SHOULD be discoverable via
   a JWKS endpoint or equivalent mechanism.
 - The key discovery mechanism is deployment-specific and is not
   mandated by this standard.
+
+<br>
+
 ## APPENDIX E: CROSS-STANDARD EVENT MATRIX
 
 *Informative*
@@ -5494,6 +5800,8 @@ types and the audit event requirements of external AI security
 standards. Implementations claiming cross-standard conformance per
 REQ-28.5.1 MUST implement all AILS event types listed for the claimed
 external standard.
+
+<br>
 
 ### E.2 DAE — Deterministic Agent Execution
 
@@ -5508,6 +5816,8 @@ external standard.
 
 **Total AILS event types required for DAE conformance:** 11
 
+<br>
+
 ### E.3 AGBAC — Agent-Based Access Control
 
 | AGBAC Requirement | AGBAC Section | AILS Event Type(s) |
@@ -5518,6 +5828,8 @@ external standard.
 | No escalation guarantee | §7.2 | `policy.violation` (with `violation_type: privilege_escalation`) |
 
 **Total AILS event types required for AGBAC conformance:** 4
+
+<br>
 
 ### E.4 ALS — Agent Layer Security
 
@@ -5549,6 +5861,8 @@ external standard.
 
 **Total AILS event types required for ALS conformance:** 16
 
+<br>
+
 ### E.5 AI-SCS — AI Supply Chain Standard
 
 | AI-SCS Requirement | AI-SCS Section | AILS Event Type |
@@ -5560,6 +5874,8 @@ external standard.
 | Enforcement action | §7.2.1 | `supplychain.validation_failure` (enforcement_action field) |
 
 **Total AILS event types required for AI-SCS conformance:** 4
+
+<br>
 
 ### E.6 ACS — Agent Capability Standard
 
@@ -5580,6 +5896,8 @@ external standard.
 
 **Total AILS event types required for ACS conformance:** 10
 
+<br>
+
 ### E.7 MCP Integrity Standard
 
 | MCP Integrity Event | MCP Integrity Section | AILS Event Type |
@@ -5595,6 +5913,8 @@ external standard.
 
 **Total AILS event types required for MCP Integrity conformance:** 5
 
+<br>
+
 ### E.8 A2A — Agent-to-Agent Protocol
 
 | A2A Protocol Operation | AILS Event |
@@ -5608,6 +5928,8 @@ external standard.
 
 **Total AILS event types required for A2A conformance:** 6
 
+<br>
+
 ### E.9 Summary
 
 | External Standard | AILS Event Types Required |
@@ -5620,6 +5942,9 @@ external standard.
 | MCP Integrity | 5 |
 | A2A | 6 |
 | **All standards combined** | **42** (with deduplication of shared event types) |
+
+<br>
+
 ## APPENDIX F: REGULATORY COMPLIANCE MATRIX
 
 *Informative*
@@ -5630,6 +5955,8 @@ This appendix maps AILS requirements and capabilities to regulatory
 frameworks applicable to AI systems. This mapping is informative and
 does not constitute legal advice. Organizations should consult legal
 counsel to determine their specific compliance obligations.
+
+<br>
 
 ### F.2 EU AI Act (Regulation 2024/1689)
 
@@ -5645,6 +5972,8 @@ counsel to determine their specific compliance obligations.
 | Article 10(2)(f) | Data governance shall include examination in view of possible biases | Inference events with guardrail results (§7.5) | L1 |
 | Article 43 | Conformity assessment | Conformance test categories (§28.6), Self-assessment vs. third-party audit (§28.8) | L3 |
 
+<br>
+
 ### F.3 NIST AI Risk Management Framework (AI RMF 1.0)
 
 | NIST AI RMF Function | Subcategory | AILS Element | AILS Level |
@@ -5659,6 +5988,8 @@ counsel to determine their specific compliance obligations.
 | MANAGE 2.2 | Response mechanisms are defined | Alert conditions (§27), Control events (§19) | L2 |
 | MANAGE 4 | Risks are managed over the AI lifecycle | Supply chain events (§16), Integrity events (§17) | L2 |
 
+<br>
+
 ### F.4 NIST Cybersecurity Framework (CSF) 2.0
 
 | CSF Function | Category | AILS Element | AILS Level |
@@ -5672,6 +6003,8 @@ counsel to determine their specific compliance obligations.
 | RESPOND (RS) | RS.CO — Communication | Push notification events (§19.8–19.10), Alert destinations (§27.4) | L2 |
 | RECOVER (RC) | RC.RP — Recovery Planning | Session resumed events (§13.3), Credential renewed events (§14.3) | L2 |
 
+<br>
+
 ### F.5 GDPR (Regulation (EU) 2016/679)
 
 | GDPR Article | Requirement Summary | AILS Element | AILS Level |
@@ -5681,6 +6014,8 @@ counsel to determine their specific compliance obligations.
 | Article 30 | Records of processing activities | Event taxonomy documenting all AI operations, Retention (§25) | L2 |
 | Article 35 | Data protection impact assessment | Provenance classification (§23), Audit trail (§22) | L2 |
 
+<br>
+
 ### F.6 SOX (Sarbanes-Oxley Act)
 
 | SOX Section | Requirement Summary | AILS Element | AILS Level |
@@ -5688,6 +6023,8 @@ counsel to determine their specific compliance obligations.
 | §302 | Corporate responsibility for financial reports | Policy decision events for financial operations (§15), Tamper-evident logging (§22) | L2 |
 | §404 | Management assessment of internal controls | Conformance claims (§28), Audit trail integrity (§22) | L2 |
 | §802 | Criminal penalties for altering documents | Tamper-evident event streams (§22.4), Append-only storage (§22.7.2) | L3 |
+
+<br>
 
 ### F.7 HIPAA (Health Insurance Portability and Accountability Act)
 
@@ -5698,6 +6035,8 @@ counsel to determine their specific compliance obligations.
 | §164.312(d) | Person or entity authentication | Actor attribution (§5.5), Credential events (§14) | L1 |
 | §164.502 | Uses and disclosures of PHI | Redaction framework (§24), Regulatory profile (§24.5) | L2 |
 
+<br>
+
 ### F.8 ISO/IEC 42001 (AI Management System)
 
 | ISO 42001 Clause | Requirement Summary | AILS Element | AILS Level |
@@ -5706,6 +6045,8 @@ counsel to determine their specific compliance obligations.
 | 8.4 | AI system operation and monitoring | Inference events (§7), Agent events (§8), System events (§21) | L1 |
 | 9.1 | Monitoring, measurement, analysis and evaluation | Event taxonomy (§6), Retention (§25) | L1 |
 | 10.1 | Nonconformity and corrective action | Policy violation events (§15.3), Supply chain validation failures (§16.5) | L2 |
+
+<br>
 
 ## APPENDIX G: OCSF MAPPING
 
@@ -5719,6 +6060,8 @@ Splunk, CrowdStrike, IBM QRadar, and other major security platforms.
 This appendix defines how AILS Events map to OCSF categories and
 classes, enabling AILS events to be ingested natively by OCSF-aware
 security tools without custom transformation.
+
+<br>
 
 ### G.2 OCSF Category Mapping
 
@@ -5740,6 +6083,8 @@ security tools without custom transformation.
 | `a2a.*` | Network Activity | 4 | A2A protocol interactions are network-level |
 | `system.*` | System Activity | 1 | System health and alerts are system-level |
 
+<br>
+
 ### G.3 OCSF Class Mapping for Security-Relevant Events
 
 | AILS Event Type | OCSF Class | OCSF Class ID | Mapping Notes |
@@ -5754,6 +6099,8 @@ security tools without custom transformation.
 | `supplychain.validation_failure` | Security Finding | 2001 | Map as supply chain threat detection. |
 | `integrity.tofu_changed` | Security Finding | 2001 | Map as integrity anomaly. |
 | `system.alert` | Security Finding | 2001 | Map alert conditions to OCSF findings. |
+
+<br>
 
 ### G.4 OCSF Field Mapping
 
@@ -5772,6 +6119,8 @@ security tools without custom transformation.
 | `indicators[].type` | `observables[].type` | Map AILS indicator types to OCSF observable types |
 | `indicators[].value` | `observables[].value` | Direct mapping |
 
+<br>
+
 ### G.5 Implementation Guidance
 
 OCSF-aware consumers SHOULD implement a transformation layer that:
@@ -5787,6 +6136,8 @@ OCSF transformation MUST NOT modify the original AILS event. The
 transformation produces an OCSF-formatted copy for consumption by
 OCSF-native tools.
 
+<br>
+
 ## APPENDIX H: MITRE ATLAS MAPPING
 
 *Informative*
@@ -5799,6 +6150,8 @@ for AI systems, analogous to MITRE ATT&CK for traditional IT systems.
 This appendix maps AILS event patterns to ATLAS techniques, enabling
 security teams to build detection rules that identify AI-specific
 attack techniques from AILS event streams.
+
+<br>
 
 ### H.2 ATLAS Technique Detection via AILS Events
 
@@ -5817,6 +6170,8 @@ attack techniques from AILS event streams.
 | Abuse Existing Tool Access | — | Tool invocation denied by authority gate or policy | `authority.gate_denied` or `tool.call` (status: `denied`) |
 | Unauthorized Agent Delegation | — | Agent delegation to unrecognized or unauthorized agent | `agent.delegation` (status: `rejected`) or `a2a.authentication` (result: `failed`) |
 
+<br>
+
 ### H.3 ATLAS Tactic Coverage
 
 | ATLAS Tactic | Coverage via AILS |
@@ -5831,6 +6186,8 @@ attack techniques from AILS event streams.
 | Exfiltration | `system.budget_exceeded`, `system.quota_exhausted` |
 | Impact | `policy.violation` (critical), `session.state_changed` (to HALTED) |
 
+<br>
+
 ### H.4 Implementation Guidance
 
 Security teams implementing ATLAS-based detection SHOULD:
@@ -5844,6 +6201,8 @@ Security teams implementing ATLAS-based detection SHOULD:
 4. Feed confirmed detections into threat intelligence platforms using
    the ATLAS technique ID as the classification anchor.
 
+<br>
+
 ## APPENDIX I: SIGMA DETECTION RULE TEMPLATES
 
 *Informative*
@@ -5856,6 +6215,8 @@ query language (Splunk SPL, Elastic KQL, Microsoft Sentinel KQL,
 Chronicle YARA-L, etc.). This appendix provides Sigma rule templates
 for the mandatory AILS alert conditions defined in Section 27 and for
 key ATLAS-mapped detection patterns from Appendix H.
+
+<br>
 
 ### I.2 Sigma Rule Templates
 
@@ -5885,6 +6246,8 @@ tags:
   - attack.defense_evasion
 ```
 
+<br>
+
 #### I.2.2 Supply Chain Validation Failure — Model Substitution
 
 ```yaml
@@ -5911,6 +6274,8 @@ tags:
   - attack.persistence
   - atlas.AML.T0010
 ```
+
+<br>
 
 #### I.2.3 Prompt Injection Detected
 
@@ -5939,6 +6304,8 @@ tags:
   - atlas.AML.T0051
 ```
 
+<br>
+
 #### I.2.4 MCP Tool Poisoning — Interface Change
 
 ```yaml
@@ -5965,6 +6332,8 @@ tags:
   - atlas.AML.T0056
 ```
 
+<br>
+
 #### I.2.5 Repeated Authority Gate Denial
 
 ```yaml
@@ -5990,6 +6359,8 @@ tags:
   - attack.execution
 ```
 
+<br>
+
 #### I.2.6 Control Channel Replay Attack
 
 ```yaml
@@ -6013,6 +6384,8 @@ tags:
   - ails.control
   - attack.initial_access
 ```
+
+<br>
 
 #### I.2.7 Autonomous Agent Budget Exhaustion
 
@@ -6040,6 +6413,8 @@ tags:
   - atlas.AML.T0024
 ```
 
+<br>
+
 #### I.2.8 DESTRUCTIVE Capability Executed Without Confirmation
 
 ```yaml
@@ -6064,6 +6439,8 @@ tags:
   - ails.capability
   - attack.execution
 ```
+
+<br>
 
 #### I.2.9 A2A Agent Authentication Failure
 
@@ -6090,6 +6467,8 @@ tags:
   - attack.initial_access
 ```
 
+<br>
+
 ### I.3 Sigma Backend Conversion
 
 These Sigma rules can be converted to SIEM-specific query languages
@@ -6113,6 +6492,8 @@ Organizations adopting AILS SHOULD maintain a Sigma rule repository
 corresponding to their deployed AILS alert conditions and extend it
 with organization-specific detection rules.
 
+<br>
+
 ## APPENDIX J: WEBHOOK PAYLOAD SPECIFICATION
 
 *Informative*
@@ -6125,6 +6506,8 @@ standard webhook payload format for AILS alert notifications, enabling
 plug-and-play integration with incident management platforms (PagerDuty,
 OpsGenie, Slack, custom endpoints) without custom transformation.
 
+<br>
+
 ### J.2 Webhook Transport Requirements
 
 Webhook delivery SHOULD use:
@@ -6135,6 +6518,8 @@ Webhook delivery SHOULD use:
 - **Retry:** At-least-once delivery with exponential backoff
   (initial 1s, maximum 60s, maximum 5 retries)
 - **Timeout:** 10 seconds per delivery attempt
+
+<br>
 
 ### J.3 Webhook Payload Format
 
@@ -6184,6 +6569,8 @@ Webhook delivery SHOULD use:
 }
 ```
 
+<br>
+
 ### J.4 Field Descriptions
 
 | Field | Required | Description |
@@ -6199,6 +6586,8 @@ Webhook delivery SHOULD use:
 | `links` | OPTIONAL | URLs for event investigation and response procedures. |
 | `signature` | OPTIONAL | HMAC-SHA256 signature for payload integrity verification. |
 
+<br>
+
 ### J.5 HMAC Signature Computation
 
 When HMAC authentication is configured:
@@ -6212,6 +6601,8 @@ When HMAC authentication is configured:
 5. The signature is additionally included in the HTTP header
    `X-AILS-Signature` for receivers that validate headers before
    parsing the body.
+
+<br>
 
 ### J.6 Platform-Specific Adaptation
 
@@ -6230,6 +6621,8 @@ Implementations MAY provide built-in adapters for these platforms.
 The standard webhook format is the canonical format; platform-specific
 formats are transformations of it.
 
+<br>
+
 ## APPENDIX K: COMPLETE EVENT EXAMPLES
 
 *Informative*
@@ -6242,6 +6635,8 @@ specifications of their respective event types. These examples
 demonstrate correct envelope construction, correlation, provenance
 tagging, redaction, and integrity envelope usage across conformance
 levels.
+
+<br>
 
 ### K.2 Example 1: `inference.call` (Level 1)
 
@@ -6346,6 +6741,8 @@ applied. No integrity fields (Level 1).
 }
 ```
 
+<br>
+
 ### K.3 Example 2: `agent.step` (Level 1)
 
 An agent reasoning step that selects a tool, correlated to the
@@ -6425,6 +6822,8 @@ inference call that produced the reasoning.
 }
 ```
 
+<br>
+
 ### K.4 Example 3: `tool.call` (Level 1)
 
 An MCP tool invocation with redacted arguments and output, linked to
@@ -6498,6 +6897,8 @@ the agent step that triggered it.
 }
 ```
 
+<br>
+
 ### K.5 Example 4: `policy.decision` with Dual-Subject Evaluation (Level 2)
 
 An AGBAC dual-subject authorization decision with full integrity
@@ -6569,6 +6970,8 @@ envelope.
 }
 ```
 
+<br>
+
 ### K.6 Example 5: `credential.issued` with Delegation Context (Level 2)
 
 An AGBAC delegation token issuance with full delegation context and
@@ -6629,6 +7032,8 @@ integrity envelope.
   "severity": "info"
 }
 ```
+
+<br>
 
 ### K.7 Example 6: `system.alert` — Chain Hash Integrity Failure (Level 2)
 
@@ -6697,6 +7102,8 @@ A critical integrity alert with indicators and full integrity envelope.
 }
 ```
 
+<br>
+
 ### K.8 Chain Hash Test Vectors
 
 The following test vectors provide verifiable chain hash computations
@@ -6726,6 +7133,8 @@ session-abc-123:550e8400-e29b-41d4-a716-446655440001:2026-04-11T10:00:00.000Z
 chain_hash = sha256:09e9993c2573ea2b8d1473e721f35a2157e6fda20d5c018c0fe665d8af27eca6
 ```
 
+<br>
+
 #### Test Vector 2 — Second Event in the Same Stream
 
 Per REQ-22.4.8, subsequent events use the previous event's `chain_hash`
@@ -6749,6 +7158,8 @@ sha256:09e9993c2573ea2b8d1473e721f35a2157e6fda20d5c018c0fe665d8af27eca6:550e8400
 chain_hash = sha256:88b2859e504f669e236dca1dbb455e15a1758ad395ddaff04d5a242ff852a9fc
 ```
 
+<br>
+
 #### Test Vector 3 — Third Event in the Same Stream
 
 **Inputs:**
@@ -6768,6 +7179,8 @@ sha256:88b2859e504f669e236dca1dbb455e15a1758ad395ddaff04d5a242ff852a9fc:550e8400
 ```
 chain_hash = sha256:6710f0dc83a244f1d3ef524168aa6e1da5fadd61d037e3574722dc87cf10e583
 ```
+
+<br>
 
 #### Verification
 
@@ -6799,6 +7212,8 @@ Example using OpenSSL command line:
 echo -n "session-abc-123:550e8400-e29b-41d4-a716-446655440001:2026-04-11T10:00:00.000Z" | openssl dgst -sha256
 # Expected: 09e9993c2573ea2b8d1473e721f35a2157e6fda20d5c018c0fe665d8af27eca6
 ```
+
+<br>
 
 ## APPENDIX L: REFERENCES
 
@@ -6851,6 +7266,8 @@ ISO 4217:2015.
 
 **[SemVer]** Preston-Werner, T., "Semantic Versioning 2.0.0".
 https://semver.org/spec/v2.0.0.html
+
+<br>
 
 ### L.2 Informative References
 
