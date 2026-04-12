@@ -240,12 +240,12 @@ AILS was designed to satisfy the logging and audit requirements of current AI re
 
 | AILS Element | EU AI Act Requirement |
 |---|---|
-| Event Envelope (§5) | Article 12 — logging capabilities |
-| Conformance Level 3 (§28.4) | Article 12 — automatic recording of events |
-| Retention — Regulatory tier (§25) | Article 12 — retention for the period appropriate to the intended purpose |
-| Provenance classification (§23) | Article 14 — human oversight, understanding of system behavior |
-| Redaction profiles (§24) | Article 10 — data governance, privacy by design |
-| Alert conditions (§27) | Article 9 — risk management, anomaly detection |
+| Event Envelope (§5) | Article 12 - logging capabilities |
+| Conformance Level 3 (§28.4) | Article 12 - automatic recording of events |
+| Retention - Regulatory tier (§25) | Article 12 - retention for the period appropriate to the intended purpose |
+| Provenance classification (§23) | Article 14 - human oversight, understanding of system behavior |
+| Redaction profiles (§24) | Article 10 - data governance, privacy by design |
+| Alert conditions (§27) | Article 9 - risk management, anomaly detection |
 
 <br>
 
@@ -253,11 +253,11 @@ AILS was designed to satisfy the logging and audit requirements of current AI re
 
 | AILS Element | NIST AI RMF Function |
 |---|---|
-| Event taxonomy (§6) | MEASURE 2.6 — AI system performance and behavior documentation |
-| Provenance (§23) | MAP 5.1 — data provenance |
-| Alert conditions (§27) | MANAGE 2.2 — response mechanisms |
-| Integrity (§22) | GOVERN 2.1 — accountability mechanisms |
-| Retention (§25) | MEASURE 4.1 — post-deployment monitoring |
+| Event taxonomy (§6) | MEASURE 2.6 - AI system performance and behavior documentation |
+| Provenance (§23) | MAP 5.1 - data provenance |
+| Alert conditions (§27) | MANAGE 2.2 - response mechanisms |
+| Integrity (§22) | GOVERN 2.1 - accountability mechanisms |
+| Retention (§25) | MEASURE 4.1 - post-deployment monitoring |
 
 <br>
 
@@ -265,10 +265,10 @@ AILS was designed to satisfy the logging and audit requirements of current AI re
 
 | AILS Element | CSF Function |
 |---|---|
-| Supply chain events (§16), Tool discovery (§9.3) | IDENTIFY — Asset Management |
-| Policy events (§15), Authority events (§12), Credential events (§14) | PROTECT — Access Control |
-| Alert conditions (§27), Policy violations (§15.3) | DETECT — Adverse Event Analysis |
-| Control events (§19), Session events (§13) | RESPOND — Mitigation |
+| Supply chain events (§16), Tool discovery (§9.3) | IDENTIFY - Asset Management |
+| Policy events (§15), Authority events (§12), Credential events (§14) | PROTECT - Access Control |
+| Alert conditions (§27), Policy violations (§15.3) | DETECT - Adverse Event Analysis |
+| Control events (§19), Session events (§13) | RESPOND - Mitigation |
 
 <br>
 
