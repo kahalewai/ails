@@ -83,6 +83,9 @@ and events without modification to either standard.
 - Appendix J: Webhook Payload Specification (Informative)
 - Appendix K: Complete Event Examples (Informative)
 - Appendix L: References (Normative / Informative)
+
+<br>
+
 ## SECTION 1: INTRODUCTION
 
 *Informative*
@@ -129,6 +132,8 @@ framework, and deployment. The consequences are measurable:
   standard defines what these logs should contain for AI-specific
   operations.
 
+<br>
+
 ### 1.2 Problem Statement
 
 The industry is missing a canonical format for AI telemetry. When an AI
@@ -166,6 +171,8 @@ None of these formats can represent the full spectrum of AI system
 behavior — from a simple LLM API call to a governed, multi-agent
 workflow operating under DAE authority controls and ALS session
 governance — in a single, unified, interoperable format.
+
+<br>
 
 ### 1.3 What This Standard Provides
 
@@ -205,6 +212,8 @@ The AI Logging Standard (AILS) defines:
    of those standards to emit conformant AILS events rather than
    defining independent audit formats.
 
+<br>
+
 ### 1.4 What This Standard Does Not Provide
 
 - **Transport mechanism.** AILS does not define how events are
@@ -232,6 +241,8 @@ The AI Logging Standard (AILS) defines:
   the content of AI inputs or outputs. It records that inference
   occurred and what parameters were used.
 
+<br>
+
 ### 1.5 Relationship to OpenTelemetry
 
 AILS is complementary to OpenTelemetry. The relationship is:
@@ -251,6 +262,8 @@ AILS events MAY be:
 The mapping between AILS events and OpenTelemetry constructs is defined
 in Appendix C. This mapping is informative; AILS does not require
 OpenTelemetry adoption.
+
+<br>
 
 ### 1.6 Relationship to AI Security Standards
 
@@ -273,12 +286,17 @@ implementation of any of these standards emits audit events in AILS
 format, the events are structurally compatible, correlatable, and
 analyzable using a single set of tools.
 
+<br>
+
 ### 1.7 Document Conventions
 
 This document uses RFC 2119 normative language (BCP 14, updated by RFC
 8174) as defined in Section 3. Normative sections contain requirements
 affecting conformance. Informative sections contain guidance that does
 not affect conformance.
+
+<br>
+
 ## SECTION 2: GLOSSARY
 
 *Normative*
@@ -400,9 +418,14 @@ Section 26.
 **Trace ID:** A unique identifier for an end-to-end workflow or request,
 compatible with OpenTelemetry trace identifiers. Shared across all AILS
 Events within a single workflow.
+
+<br>
+
 ## SECTION 3: NORMATIVE LANGUAGE AND CONVENTIONS
 
 *Normative*
+
+<br>
 
 ### 3.1 Normative Language Policy
 
@@ -419,6 +442,8 @@ RFC 8174:
 The word "required" in prose uses its ordinary English meaning and is
 not a normative keyword unless rendered in all capitals.
 
+<br>
+
 ### 3.2 Requirement Identifier Format
 
 Normative requirements are identified with the prefix `REQ-` followed
@@ -430,6 +455,8 @@ REQ-{section}.{sequence}
 
 Example: `REQ-5.1.1` is the first requirement in Section 5.1.
 
+<br>
+
 ### 3.3 Conformance Level Notation
 
 Requirements that apply only at specific conformance levels are
@@ -438,6 +465,8 @@ annotated as follows:
 - Requirements with no level annotation apply at all conformance levels.
 - Requirements annotated `[Level 2+]` apply at Level 2 and Level 3.
 - Requirements annotated `[Level 3]` apply at Level 3 only.
+
+<br>
 
 ### 3.4 Document Conventions
 
@@ -449,6 +478,8 @@ annotated as follows:
   `[INFORMATIVE]`.
 - Non-normative examples are prefixed `[EXAMPLE]`.
 
+<br>
+
 ### 3.5 JSON Conventions
 
 All AILS Events MUST be serializable as JSON objects conforming to
@@ -456,6 +487,9 @@ RFC 8259. Field names MUST be encoded as UTF-8 strings. Timestamp values
 MUST use ISO 8601 format with UTC timezone designator and millisecond
 precision (e.g., `2026-04-10T14:30:00.000Z`). UUID values MUST conform
 to RFC 9562 (UUID version 4 or version 7).
+
+<br>
+
 ## SECTION 4: DESIGN PRINCIPLES
 
 *Normative*
@@ -553,6 +587,9 @@ alert event when logging degradation is detected. Only when a specific
 security standard (e.g., ALS, ACS) mandates fail-closed behavior on
 audit failure does logging failure become blocking — and that behavior
 is governed by the security standard, not by AILS itself.
+
+<br>
+
 ## SECTION 5: EVENT ENVELOPE SPECIFICATION
 
 *Normative*
