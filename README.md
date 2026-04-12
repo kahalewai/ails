@@ -1,6 +1,6 @@
 <div align="center">
 
-<img width="351" height="469" alt="ails-logo" src="https://github.com/user-attachments/assets/a9f2b7a2-f25b-46df-acc9-c5b55bcd1bd6" />
+<img width="359" height="496" alt="ails-logo2" src="https://github.com/user-attachments/assets/cc811c86-ea83-4657-ae8f-d3e289019a18" />
 
 ![Status: Released](https://img.shields.io/badge/Status-Released-brightgreen)
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-blue)
