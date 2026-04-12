@@ -20,11 +20,11 @@ Despite this, the industry has no standardized format for recording AI system be
 
 <br>
 
-> AILS is the canonical event format for AI telemetry — from developer-facing observability to tamper-evident, hash-chained audit trails
+> AILS is the canonical event format for AI telemetry, from developer-facing observability to tamper-evident, hash-chained audit trails
 
 <br>
 
-AILS (AI Logging Standard) defines a single, unified, vendor-neutral format that records what AI systems do and how that behavior is structured. It covers inference, agent execution, tool invocation, memory access, human interaction, authority lifecycle, session governance, credential management, policy enforcement, supply chain validation, integrity verification, capability governance, control channel operations, agent-to-agent protocol interactions, and system health — all in one interoperable format.
+AILS (AI Logging Standard) defines a single, unified, vendor-neutral format that records what AI systems do and how that behavior is structured. It covers inference, agent execution, tool invocation, memory access, human interaction, authority lifecycle, session governance, credential management, policy enforcement, supply chain validation, integrity verification, capability governance, control channel operations, agent-to-agent protocol interactions, and system health, all in one interoperable format.
 
 <br>
 
@@ -51,7 +51,7 @@ Existing logging and telemetry standards were designed for deterministic softwar
 * **Vendor-specific formats** (OpenAI usage logs, Anthropic API logs, LangSmith traces, etc.) are proprietary, incompatible, and cannot represent cross-vendor workflows.
 * **Framework-specific formats** (LangChain callbacks, CrewAI logs, AutoGen traces) are bound to specific agent frameworks and cannot represent infrastructure-level or cross-framework events.
 
-No existing format can represent the full spectrum of AI system behavior — from a simple LLM API call to a governed, multi-agent workflow operating under authority controls and session governance — in a single, unified, interoperable format.
+No existing format can represent the full spectrum of AI system behavior, from a simple LLM API call to a governed, multi-agent workflow operating under authority controls and session governance, in a single, unified, interoperable format.
 
 AILS fills this gap.
 
@@ -76,7 +76,7 @@ AILS fills this gap.
 }
 ```
 
-The envelope is invariant. Every event, inference, agent step, tool call, policy decision, security alert — carries the same identity, correlation, provenance, and integrity fields. Variation between event types lives exclusively in the `payload`.
+The envelope is invariant. Every event, inference, agent step, tool call, policy decision, security alert, carries the same identity, correlation, provenance, and integrity fields. Variation between event types lives exclusively in the `payload`.
 
 <br>
 
@@ -88,7 +88,7 @@ Every AILS event carries a `data_classification` tag: `SYSTEM_TRUSTED`, `USER_TR
 
 **Correlation is first-class**
 
-Every event carries W3C Trace Context-compatible `trace_id` and `span_id` fields. Multi-step agent workflows, cross-service interactions, and end-to-end request chains are reconstructable from AILS events using standard correlation fields alone — no payload inspection required.
+Every event carries W3C Trace Context-compatible `trace_id` and `span_id` fields. Multi-step agent workflows, cross-service interactions, and end-to-end request chains are reconstructable from AILS events using standard correlation fields alone, no payload inspection required.
 
 <br>
 
