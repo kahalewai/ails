@@ -314,8 +314,8 @@ AILS defines a standardized webhook payload format for alert delivery to PagerDu
 
 AILS is complementary to OpenTelemetry, not a replacement:
 
-* **AILS** defines AI-specific semantics — the meaning and structure of AI telemetry events
-* **OpenTelemetry** provides telemetry infrastructure — collection, correlation, export, and transport
+* **AILS** defines AI-specific semantics, the meaning and structure of AI telemetry events
+* **OpenTelemetry** provides telemetry infrastructure, collection, correlation, export, and transport
 
 AILS events may be:
 
