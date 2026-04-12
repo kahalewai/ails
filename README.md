@@ -335,7 +335,7 @@ AILS correlation fields (`trace_id`, `span_id`) are format-compatible with W3C T
 
 For the complete formal specification, including all 73 event type definitions, JSON Schema, conformance requirements, and appendices:
 
-[AILS-Standard-v1.0.0.md](ails_standard.md)
+[AILS-Standard-v1.0.0.md](https://github.com/kahalewai/ails/blob/main/spec/ails_specification.md)
 
 **Status:** Released
 
