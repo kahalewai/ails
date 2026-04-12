@@ -1,8 +1,6 @@
 <div align="center">
 
-# AI Logging Standard (AILS)
-
-The canonical, vendor-neutral event format for AI system observability, audit, and security
+<img width="351" height="469" alt="ails-logo" src="https://github.com/user-attachments/assets/a9f2b7a2-f25b-46df-acc9-c5b55bcd1bd6" />
 
 ![Status: Released](https://img.shields.io/badge/Status-Released-brightgreen)
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-blue)
