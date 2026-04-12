@@ -425,8 +425,6 @@ Events within a single workflow.
 
 *Normative*
 
-<br>
-
 ### 3.1 Normative Language Policy
 
 This standard uses RFC 2119 (BCP 14) normative keywords as updated by
@@ -499,6 +497,8 @@ conflicting with these principles is non-conformant regardless of
 whether a specific requirement addresses the conflict. When requirements
 are ambiguous, these principles are the authoritative tie-breakers.
 
+<br>
+
 **DP-1 — SEMANTICS OVER TRANSPORT**
 
 AILS defines what is recorded and how it is structured. AILS SHALL NOT
@@ -508,6 +508,8 @@ via OpenTelemetry, HTTP, message queues, file systems, Unix sockets, or
 any other mechanism that preserves the structural integrity of the event
 envelope.
 
+<br>
+
 **DP-2 — SINGLE ENVELOPE, ALL EVENT TYPES**
 
 Every AILS Event — from a simple LLM inference call to a tamper-evident
@@ -515,6 +517,8 @@ security audit record — SHALL use the same canonical Event Envelope. The
 envelope is invariant across event categories, conformance levels, and
 deployment contexts. Variation between event types is expressed
 exclusively in the event payload, never in the envelope structure.
+
+<br>
 
 **DP-3 — GRADUATED INTEGRITY**
 
@@ -524,6 +528,8 @@ overhead. Level 2 adds tamper-evidence via chain hashing and sequence
 numbering. Level 3 adds cryptographic event signing. An implementation
 MUST be able to emit Level 1 events with no cryptographic dependencies.
 Higher integrity levels are additive, not replacements.
+
+<br>
 
 **DP-4 — PRIVACY BY CONSTRUCTION**
 
@@ -535,6 +541,8 @@ breaking event envelope validity. A conformant AILS Event with all
 sensitive fields redacted MUST remain a valid, parseable, correlatable
 event.
 
+<br>
+
 **DP-5 — PROVENANCE IS MANDATORY**
 
 Every AILS Event SHALL carry a provenance tag classifying the trust
@@ -544,6 +552,8 @@ an optional annotation. Downstream systems MUST be able to filter,
 route, and evaluate events based on provenance without inspecting
 payloads.
 
+<br>
+
 **DP-6 — CORRELATION IS FIRST-CLASS**
 
 AILS SHALL provide mandatory correlation fields — trace ID, span ID,
@@ -552,12 +562,16 @@ cross-service interactions, and end-to-end request chains MUST be
 reconstructable from AILS events using standard correlation fields
 alone, without requiring payload inspection or external metadata.
 
+<br>
+
 **DP-7 — VENDOR NEUTRALITY**
 
 AILS SHALL NOT reference, require, or privilege any specific AI vendor,
 model provider, agent framework, or observability platform. Vendor-
 specific data MAY appear in event payloads but SHALL NOT be required by
 the event envelope or by any normative event type definition.
+
+<br>
 
 **DP-8 — CROSS-STANDARD UNIFICATION**
 
@@ -568,6 +582,8 @@ conformant events, those events SHALL be structurally compatible with
 events from any other AILS-conformant implementation, regardless of
 which standard triggered the event.
 
+<br>
+
 **DP-9 — BACKWARD-COMPATIBLE EVOLUTION**
 
 Schema evolution MUST be additive wherever possible. New fields MAY be
@@ -576,6 +592,8 @@ Required fields MUST NOT be removed or renamed without a major version
 increment. Consumers of AILS events MUST ignore unrecognized fields.
 Emitters MUST NOT reject events containing fields not defined in their
 implemented version of the standard.
+
+<br>
 
 **DP-10 — FAIL-SAFE LOGGING**
 
@@ -601,6 +619,8 @@ It provides identity, typing, timestamps, correlation, provenance,
 actor attribution, integrity, and a payload container. The envelope is
 invariant across all event categories and conformance levels. All
 variation between event types is expressed in the `payload` field.
+
+<br>
 
 ### 5.2 Envelope Structure
 
@@ -638,6 +658,8 @@ specific data MUST be placed within the `payload`, `context`, or
 top-level fields without error. This requirement enables forward
 compatibility with future minor versions of the standard.
 
+<br>
+
 ### 5.3 Core Identity Fields
 
 **REQ-5.3.1:** The `ails_version` field MUST contain the full semantic
@@ -668,6 +690,8 @@ clock source where available. In environments where monotonic clocks are
 not available, implementations SHOULD document the clock source and its
 precision characteristics.
 
+<br>
+
 ### 5.4 Emitter Object
 
 The `emitter` field identifies the software component that produced
@@ -691,6 +715,8 @@ In serverless environments, the function invocation ID is RECOMMENDED.
 **REQ-5.4.3:** The `emitter.type` field MUST use one of the values
 defined in REQ-5.4.1. Custom emitter types MUST use the prefix `x-`
 followed by a reverse-domain namespace.
+
+<br>
 
 ### 5.5 Actor Object
 
@@ -735,6 +761,8 @@ and the secondary actor (typically the human principal) SHALL be
 represented within the event `payload` using the `delegating_principal`
 field defined in the applicable event type specification.
 
+<br>
+
 ### 5.6 Correlation Object
 
 The `correlation` field provides the identifiers necessary to link AILS
@@ -767,6 +795,8 @@ chain.
 trace context, the Emitter MUST generate a new trace ID and span ID
 conforming to REQ-5.6.1.
 
+<br>
+
 ### 5.7 Data Classification Field
 
 **REQ-5.7.1:** The `data_classification` field MUST be present on every
@@ -787,6 +817,8 @@ and untrusted inputs, the Emitter MUST assign the least trusted
 classification that applies. An event influenced by any
 `EXTERNAL_UNTRUSTED` input MUST be classified as `EXTERNAL_UNTRUSTED`.
 
+<br>
+
 ### 5.8 Context Object
 
 The `context` field provides deployment and environmental metadata that
@@ -806,6 +838,8 @@ The following fields are defined:
 **REQ-5.8.2:** Custom context fields not defined in this section MUST
 be placed within the `labels` sub-object, not as top-level `context`
 fields.
+
+<br>
 
 ### 5.9 Metadata Object
 
@@ -831,6 +865,8 @@ object. The following fields are defined:
 | `amount` | number | MUST | Numeric cost value. |
 | `currency` | string | MUST | ISO 4217 currency code (e.g., `"USD"`). |
 | `unit` | string | OPTIONAL | Cost unit description (e.g., `"per_request"`, `"per_1k_tokens"`). |
+
+<br>
 
 ### 5.10 Integrity Object
 
@@ -866,6 +902,8 @@ be documented in the implementation's conformance claim.
 **REQ-5.10.5:** At Level 1, the `integrity` field MAY be absent. Level 1
 events are valid without integrity fields.
 
+<br>
+
 ### 5.11 Tenant Object
 
 The `tenant` field provides multi-tenant isolation for AILS Events in
@@ -882,6 +920,8 @@ containing:
 **REQ-5.11.2:** In multi-tenant deployments, the `tenant` field MUST be
 present on every AILS Event. See Section 26 for multi-tenant isolation
 requirements.
+
+<br>
 
 ### 5.12 Redaction Object
 
@@ -909,6 +949,8 @@ the `redaction` object MAY be absent.
   fields
 - A masked value preserving structure but replacing content (e.g.,
   `"u]***@***.com"`) for masked fields
+
+<br>
 
 ### 5.13 Severity Field
 
@@ -956,6 +998,8 @@ fields defined within specific event payloads (e.g.,
 and MAY differ when the envelope severity is set for routing purposes
 while the payload severity reflects domain-specific classification.
 
+<br>
+
 ### 5.14 Indicators Array
 
 The `indicators` field provides a standardized structure for extracting
@@ -1000,6 +1044,8 @@ indicator value MUST be replaced with the redacted form and the
 `redaction.redacted_fields` array MUST include the indicator's JSON
 path.
 
+<br>
+
 ### 5.15 Envelope Validation Rules
 
 **REQ-5.15.1:** All fields designated as MUST in the envelope structure
@@ -1020,6 +1066,9 @@ SHOULD NOT exceed 1 megabyte. Events exceeding this size SHOULD be
 split into multiple events linked by a shared `correlation_id`, or
 large content fields SHOULD be redacted or truncated. Implementations
 MAY enforce a configurable maximum event size.
+
+<br>
+
 ## SECTION 6: EVENT TAXONOMY
 
 *Normative*
@@ -1030,6 +1079,8 @@ The AILS Event Taxonomy defines the complete set of event categories and
 event types recognized by this standard. Each event category groups
 related event types that share a common domain. Each event type within
 a category defines a specific payload structure.
+
+<br>
 
 ### 6.2 Category Registry
 
@@ -1070,6 +1121,8 @@ by a reverse-domain namespace (e.g., `x-com.example.custom_category`).
 Implementations MUST NOT define custom event types within standard
 categories without the `x-` prefix.
 
+<br>
+
 ### 6.3 Event Type Naming Rules
 
 **REQ-6.3.1:** Event type names MUST be lowercase.
@@ -1080,6 +1133,8 @@ within the event name component (e.g., `inference.call`,
 
 **REQ-6.3.3:** Event type names MUST NOT exceed 128 characters in total
 length including the category prefix and separator.
+
+<br>
 
 ### 6.4 Event Type Stability
 
@@ -1095,6 +1150,8 @@ stability designation:
 **REQ-6.4.2:** All event types defined in Sections 7 through 20 of this
 version of the standard are designated `stable` unless explicitly marked
 otherwise.
+
+<br>
 
 ### 6.5 Payload Structure Convention
 
@@ -1114,6 +1171,8 @@ OPTIONAL MAY be absent.
 specification MAY be present. Consumers MUST ignore unrecognized payload
 fields.
 
+<br>
+
 ### 6.6 Cross-Standard Event Binding
 
 **REQ-6.6.1:** When an AILS event type is defined to satisfy an audit
@@ -1124,6 +1183,8 @@ reference the specific external standard requirement it satisfies.
 **REQ-6.6.2:** The complete mapping between AILS event types and
 external standard audit requirements is maintained in Appendix E
 (Cross-Standard Event Matrix).
+
+<br>
 
 ### 6.7 Summary of Event Types
 
@@ -1205,6 +1266,9 @@ defined by this standard. The authoritative definitions are in Sections
 | `system.retention_action` | system | A retention policy action was executed |
 | `system.budget_exceeded` | system | A cost or resource budget threshold was crossed |
 | `system.quota_exhausted` | system | A rate limit or quota was exhausted |
+
+<br>
+
 ## SECTION 7: CATEGORY — INFERENCE EVENTS
 
 *Normative*
@@ -1217,6 +1281,8 @@ the fundamental unit of AI behavior: a request to a model and the
 resulting response. Inference events enable debugging, cost analysis,
 latency tracking, safety monitoring, and cross-vendor comparison of
 model interactions.
+
+<br>
 
 ### 7.2 Event Type: `inference.call`
 
@@ -1327,6 +1393,8 @@ present, MUST contain:
 | `tool_call_id` | string | OPTIONAL | Provider-assigned identifier for the tool call. |
 | `arguments_summary` | string | OPTIONAL | Summary or hash of the arguments. Subject to redaction. Full arguments MUST NOT be included by default. |
 
+<br>
+
 ### 7.3 Event Type: `inference.embedding`
 
 **Stability:** Stable
@@ -1347,6 +1415,8 @@ present, MUST contain:
 | `latency` | object | OPTIONAL | Timing per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. |
 
+<br>
+
 ### 7.4 Event Type: `inference.cache_hit`
 
 **Stability:** Stable
@@ -1363,6 +1433,8 @@ without making a full inference request.
 | `original_model` | object | MUST | Model identification of the cached inference per REQ-7.2.2. |
 | `cache_age_seconds` | number | OPTIONAL | Age of the cached response in seconds. |
 | `similarity_score` | number | OPTIONAL | Semantic similarity score, if `cache_type` is `semantic`. |
+
+<br>
 
 ### 7.5 Event Type: `inference.guardrail`
 
@@ -1385,6 +1457,8 @@ inference content.
 | `action_taken` | string | OPTIONAL | Action taken in response. One of: `none`, `blocked`, `modified`, `flagged`, `logged`. |
 | `scores` | object | OPTIONAL | Key-value pairs of category names to numeric confidence scores. |
 
+<br>
+
 ### 7.6 Event Type: `inference.routing`
 
 **Stability:** Stable
@@ -1404,6 +1478,8 @@ criteria.
 | `routing_reason` | string | MUST | Reason for the routing decision. One of: `primary`, `fallback_unavailable`, `fallback_overloaded`, `fallback_cost`, `fallback_latency`, `policy`, `load_balance`. |
 | `candidates_evaluated` | integer | OPTIONAL | Number of candidate models or providers evaluated. |
 | `fallback_depth` | integer | OPTIONAL | Position in the fallback chain (1 = primary, 2 = first fallback, etc.). |
+
+<br>
 
 ### 7.7 Event Type: `inference.generation`
 
@@ -1464,6 +1540,8 @@ present, MAY contain:
 | `seed` | integer | Random seed for reproducibility. |
 | `negative_prompt` | string | Negative prompt, if applicable. Subject to redaction. |
 
+<br>
+
 ### 7.8 Event Type: `inference.structured_output`
 
 **Stability:** Stable
@@ -1487,6 +1565,8 @@ model-schema misalignment.
 | `retry_count` | integer | OPTIONAL | Number of retries attempted to produce valid output. |
 | `inference_event_id` | string | MUST | Event ID of the `inference.call` event this structured output validation applies to. |
 
+<br>
+
 ## SECTION 8: CATEGORY — AGENT EVENTS
 
 *Normative*
@@ -1499,6 +1579,8 @@ systems that plan, reason, select tools, observe results, and adjust
 behavior across multiple inference cycles. Agent events make this
 behavior observable without requiring disclosure of proprietary
 reasoning implementations or chain-of-thought content.
+
+<br>
 
 ### 8.2 Event Type: `agent.lifecycle`
 
@@ -1525,6 +1607,8 @@ subsequent `agent.step` events.
 | `configuration` | object | OPTIONAL | Agent configuration parameters. Subject to redaction. MUST NOT contain credentials. |
 | `termination_reason` | string | OPTIONAL | Reason for termination. MUST be present when `lifecycle_action` is `terminated` or `failed`. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. Present when `lifecycle_action` is `failed`. |
+
+<br>
 
 ### 8.3 Event Type: `agent.step`
 
@@ -1576,6 +1660,8 @@ sensitive intellectual property and safety-relevant data. The
 `disclosure` value `hidden` explicitly indicates that reasoning occurred
 but is not disclosed, and this is a conformant state.
 
+<br>
+
 ### 8.4 Event Type: `agent.delegation`
 
 **Stability:** Stable
@@ -1596,6 +1682,8 @@ orchestration workflows and identification of delegation chains.
 | `constraints` | object | OPTIONAL | Constraints placed on the delegated agent (e.g., time limits, tool restrictions, scope boundaries). |
 | `status` | string | MUST | Outcome of the delegation. One of: `initiated`, `accepted`, `completed`, `failed`, `rejected`. |
 | `result_summary` | string | OPTIONAL | Summary of the delegation result. Subject to redaction. Present when `status` is `completed` or `failed`. |
+
+<br>
 
 ### 8.5 Event Type: `agent.loop_checkpoint`
 
@@ -1634,6 +1722,8 @@ contain:
 | `elapsed_seconds` | number | Wall-clock seconds since loop start. |
 | `estimated_cost` | object | Estimated cost per REQ-5.9.2. |
 
+<br>
+
 ### 8.6 Event Type: `agent.workflow_node`
 
 **Stability:** Stable
@@ -1663,6 +1753,8 @@ and debugging of graph execution paths.
 | `latency` | object | OPTIONAL | Timing per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. Present when `status` is `failed`. |
 
+<br>
+
 ## SECTION 9: CATEGORY — TOOL EVENTS
 
 *Normative*
@@ -1675,6 +1767,8 @@ modern AI agents and represents the boundary where AI reasoning produces
 real-world side effects. Tool events enable auditing of external actions,
 debugging of tool selection and execution, and correlation of tool
 invocations with the agent decisions that triggered them.
+
+<br>
 
 ### 9.2 Event Type: `tool.call`
 
@@ -1726,6 +1820,8 @@ invocation completes, whether successfully or with an error. One
 | `network_egress` | boolean | Whether the invocation made outbound network connections. |
 | `state_mutation` | string | One of: `none`, `reversible`, `irreversible`. |
 
+<br>
+
 ### 9.3 Event Type: `tool.discovery`
 
 **Stability:** Stable
@@ -1744,6 +1840,8 @@ schema retrieval, and dynamic tool registration.
 | `tool_count` | integer | OPTIONAL | Number of tools discovered or affected. |
 | `tools` | array of string | OPTIONAL | Names of tools discovered or affected. |
 | `schema_token_count` | integer | OPTIONAL | Total token count of the discovered tool schemas, if measurable. |
+
+<br>
 
 ### 9.4 Event Type: `tool.mcp_resource`
 
@@ -1771,6 +1869,8 @@ systems.
 | `template_arguments` | object | OPTIONAL | Template arguments used for resolution. Subject to redaction. |
 | `latency` | object | OPTIONAL | Timing per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. |
+
+<br>
 
 ### 9.5 Event Type: `tool.mcp_sampling`
 
@@ -1800,6 +1900,8 @@ event captures the server-initiated request and its outcome.
 | `latency` | object | OPTIONAL | Timing per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. |
 
+<br>
+
 ## SECTION 10: CATEGORY — MEMORY EVENTS
 
 *Normative*
@@ -1812,6 +1914,8 @@ knowledge bases, context systems, and retrieval-augmented generation
 behavior — what an agent remembers, what context is retrieved, and what
 knowledge is persisted directly shapes future inferences and decisions.
 Memory events make this influence observable.
+
+<br>
 
 ### 10.2 Event Type: `memory.read`
 
@@ -1858,6 +1962,8 @@ operation.
 | `total_available` | integer | Total number of matching items in the store, if known. |
 | `content_summary` | string | Summary of retrieved content. Subject to redaction. |
 
+<br>
+
 ### 10.3 Event Type: `memory.write`
 
 **Stability:** Stable
@@ -1882,6 +1988,9 @@ persists context, updates a knowledge base, or stores embeddings.
 | `latency` | object | OPTIONAL | Timing details per REQ-7.2.7. |
 | `error` | object | OPTIONAL | Error details per REQ-7.2.8. |
 | `triggered_by` | string | OPTIONAL | Event ID of the `agent.step` or operation that triggered this write. |
+
+<br>
+
 ## SECTION 11: CATEGORY — HUMAN INTERACTION EVENTS
 
 *Normative*
