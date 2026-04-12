@@ -20,7 +20,11 @@
 
 ### ABSTRACT
 
-The industry lacks a standardized, vendor-neutral format for recording AI system behavior across inference, agent execution, tool invocation, memory access, governance enforcement, and security lifecycle events. AI Logging Standard (AILS) fills this gap by defining a canonical event envelope, a structured event taxonomy, graduated integrity mechanisms,
+The industry lacks a standardized, vendor-neutral format for recording
+AI system behavior across inference, agent execution, tool invocation,
+memory access, governance enforcement, and security lifecycle events.
+AI Logging Standard (AILS) fills this gap by defining a canonical event
+envelope, a structured event taxonomy, graduated integrity mechanisms,
 and conformance levels that serve both general-purpose AI observability
 and security-critical audit requirements. AILS operates as a semantic
 standard defining what is recorded and how it is structured; it does not
