@@ -115,10 +115,10 @@ framework, and deployment. The consequences are measurable:
   investigation of AI behavior require manual reconstruction from
   incomplete data.
 
-- **Insufficient audit capability.** AI security standards — including
+- **Insufficient audit capability.** AI security standards - including
   Deterministic Agent Execution (DAE), Agent-Based Access Control
   (AGBAC), Agent Layer Security (ALS), AI Supply Chain Standard (AI-SCS),
-  Agent Capability Standard (ACS), and the MCP Integrity Standard —
+  Agent Capability Standard (ACS), and the MCP Integrity Standard -
   each independently define audit event requirements. Without a shared
   logging standard, implementations produce incompatible audit formats
   that cannot be correlated, verified, or analyzed across standard
@@ -166,9 +166,9 @@ were designed for deterministic software systems:
   or cross-framework agent interactions.
 
 None of these formats can represent the full spectrum of AI system
-behavior — from a simple LLM API call to a governed, multi-agent
+behavior - from a simple LLM API call to a governed, multi-agent
 workflow operating under DAE authority controls and ALS session
-governance — in a single, unified, interoperable format.
+governance - in a single, unified, interoperable format.
 
 <br>
 
@@ -337,8 +337,8 @@ the event sequence. Defined in Section 22.
 (Level 1, Level 2, Level 3) as defined in Section 28. Levels are
 cumulative.
 
-**Correlation Context:** The set of identifiers — including trace ID,
-span ID, parent span ID, and session ID — that link an AILS Event to
+**Correlation Context:** The set of identifiers - including trace ID,
+span ID, parent span ID, and session ID - that link an AILS Event to
 other events in the same workflow, session, or transaction.
 
 **Data Classification:** The provenance designation assigned to the
@@ -358,7 +358,7 @@ Event, defined by the event type specification for each event in the
 AILS event taxonomy.
 
 **Event Stream:** An ordered sequence of AILS Events sharing a common
-scope — typically a session, a trace, or a tenant partition — within
+scope - typically a session, a trace, or a tenant partition - within
 which chain hashing and sequence numbering are maintained.
 
 **Event Type:** The namespaced identifier of an AILS Event, consisting
@@ -497,7 +497,7 @@ are ambiguous, these principles are the authoritative tie-breakers.
 
 <br>
 
-**DP-1 — SEMANTICS OVER TRANSPORT**
+**DP-1 - SEMANTICS OVER TRANSPORT**
 
 AILS defines what is recorded and how it is structured. AILS SHALL NOT
 mandate transport mechanisms, wire protocols, or delivery infrastructure.
@@ -508,17 +508,17 @@ envelope.
 
 <br>
 
-**DP-2 — SINGLE ENVELOPE, ALL EVENT TYPES**
+**DP-2 - SINGLE ENVELOPE, ALL EVENT TYPES**
 
-Every AILS Event — from a simple LLM inference call to a tamper-evident
-security audit record — SHALL use the same canonical Event Envelope. The
+Every AILS Event - from a simple LLM inference call to a tamper-evident
+security audit record - SHALL use the same canonical Event Envelope. The
 envelope is invariant across event categories, conformance levels, and
 deployment contexts. Variation between event types is expressed
 exclusively in the event payload, never in the envelope structure.
 
 <br>
 
-**DP-3 — GRADUATED INTEGRITY**
+**DP-3 - GRADUATED INTEGRITY**
 
 AILS SHALL support three conformance levels with increasing integrity
 guarantees. Level 1 provides structured telemetry with no integrity
@@ -529,7 +529,7 @@ Higher integrity levels are additive, not replacements.
 
 <br>
 
-**DP-4 — PRIVACY BY CONSTRUCTION**
+**DP-4 - PRIVACY BY CONSTRUCTION**
 
 AILS SHALL treat all AI input content (prompts, messages, instructions),
 AI output content (completions, responses, reasoning), personally
@@ -541,28 +541,28 @@ event.
 
 <br>
 
-**DP-5 — PROVENANCE IS MANDATORY**
+**DP-5 - PROVENANCE IS MANDATORY**
 
 Every AILS Event SHALL carry a provenance tag classifying the trust
-level of the event source. This classification — SYSTEM_TRUSTED,
-USER_TRUSTED, or EXTERNAL_UNTRUSTED — is a required envelope field, not
+level of the event source. This classification - SYSTEM_TRUSTED,
+USER_TRUSTED, or EXTERNAL_UNTRUSTED - is a required envelope field, not
 an optional annotation. Downstream systems MUST be able to filter,
 route, and evaluate events based on provenance without inspecting
 payloads.
 
 <br>
 
-**DP-6 — CORRELATION IS FIRST-CLASS**
+**DP-6 - CORRELATION IS FIRST-CLASS**
 
-AILS SHALL provide mandatory correlation fields — trace ID, span ID,
-and session ID — in every event envelope. Multi-step agent workflows,
+AILS SHALL provide mandatory correlation fields - trace ID, span ID,
+and session ID - in every event envelope. Multi-step agent workflows,
 cross-service interactions, and end-to-end request chains MUST be
 reconstructable from AILS events using standard correlation fields
 alone, without requiring payload inspection or external metadata.
 
 <br>
 
-**DP-7 — VENDOR NEUTRALITY**
+**DP-7 - VENDOR NEUTRALITY**
 
 AILS SHALL NOT reference, require, or privilege any specific AI vendor,
 model provider, agent framework, or observability platform. Vendor-
@@ -571,7 +571,7 @@ the event envelope or by any normative event type definition.
 
 <br>
 
-**DP-8 — CROSS-STANDARD UNIFICATION**
+**DP-8 - CROSS-STANDARD UNIFICATION**
 
 AILS SHALL define event types sufficient to satisfy the audit
 requirements of DAE, AGBAC, ALS, AI-SCS, ACS, and the MCP Integrity
@@ -582,7 +582,7 @@ which standard triggered the event.
 
 <br>
 
-**DP-9 — BACKWARD-COMPATIBLE EVOLUTION**
+**DP-9 - BACKWARD-COMPATIBLE EVOLUTION**
 
 Schema evolution MUST be additive wherever possible. New fields MAY be
 added to the event envelope or to event payloads in minor versions.
@@ -593,7 +593,7 @@ implemented version of the standard.
 
 <br>
 
-**DP-10 — FAIL-SAFE LOGGING**
+**DP-10 - FAIL-SAFE LOGGING**
 
 AILS implementations SHALL NOT cause AI system failure when logging
 infrastructure is degraded or unavailable. At Level 1, logging failure
@@ -601,7 +601,7 @@ SHALL be non-blocking. At Level 2 and above, implementations SHOULD
 buffer events during transient logging failures and MUST emit a system
 alert event when logging degradation is detected. Only when a specific
 security standard (e.g., ALS, ACS) mandates fail-closed behavior on
-audit failure does logging failure become blocking — and that behavior
+audit failure does logging failure become blocking - and that behavior
 is governed by the security standard, not by AILS itself.
 
 <br>
@@ -753,7 +753,7 @@ object SHOULD be present and MAY contain:
 | `roles` | array of string | OPTIONAL | Roles held by the human principal at event time. |
 
 **REQ-5.5.4:** In events where both an agent and a human are relevant
-— such as dual-subject authorization decisions defined by AGBAC — the
+- such as dual-subject authorization decisions defined by AGBAC - the
 `actor` field SHALL represent the primary actor (typically the agent),
 and the secondary actor (typically the human principal) SHALL be
 represented within the event `payload` using the `delegating_principal`
@@ -1019,18 +1019,18 @@ array. Each entry MUST be a JSON object containing:
 following event types when the event represents an anomalous, failed,
 or security-relevant condition:
 
-- `policy.violation` — violating entity, affected resource
-- `policy.decision` with `decision: deny` — denied subject, resource
-- `supplychain.validation_failure` — affected artifact hash, name
-- `supplychain.artifact_verified` with `verification_result: fail` —
+- `policy.violation` - violating entity, affected resource
+- `policy.decision` with `decision: deny` - denied subject, resource
+- `supplychain.validation_failure` - affected artifact hash, name
+- `supplychain.artifact_verified` with `verification_result: fail` -
   expected and actual hashes
-- `integrity.manifest_verified` with `verification_result: fail` —
+- `integrity.manifest_verified` with `verification_result: fail` -
   server name, publisher
-- `integrity.tofu_changed` — tool name, expected and observed digests
-- `authority.gate_denied` — action ID, token ID if presented
-- `control.channel_auth_failed` — source IP, certificate fingerprint
-- `control.replay_detected` — command ID, commander ID
-- `credential.refused` — requesting entity
+- `integrity.tofu_changed` - tool name, expected and observed digests
+- `authority.gate_denied` - action ID, token ID if presented
+- `control.channel_auth_failed` - source IP, certificate fingerprint
+- `control.replay_detected` - command ID, commander ID
+- `credential.refused` - requesting entity
 
 **REQ-5.14.3:** The `indicators` field MUST NOT contain credential
 material, private keys, bearer tokens, or raw authentication secrets.
@@ -1267,7 +1267,7 @@ defined by this standard. The authoritative definitions are in Sections
 
 <br>
 
-## SECTION 7: CATEGORY — INFERENCE EVENTS
+## SECTION 7: CATEGORY - INFERENCE EVENTS
 
 *Normative*
 
@@ -1462,7 +1462,7 @@ inference content.
 **Stability:** Stable
 
 **Description:** Emitted when an inference gateway, proxy, or router
-makes a routing decision — selecting a model, provider, or endpoint for
+makes a routing decision - selecting a model, provider, or endpoint for
 an inference request based on cost, latency, availability, or policy
 criteria.
 
@@ -1484,7 +1484,7 @@ criteria.
 **Stability:** Stable
 
 **Description:** Emitted when a non-text generative AI operation
-completes — including image generation, audio synthesis, video
+completes - including image generation, audio synthesis, video
 generation, code execution, and other modalities where the output is
 not a text completion. This event type covers operations that are
 structurally different from text inference (different parameters,
@@ -1545,7 +1545,7 @@ present, MAY contain:
 **Stability:** Stable
 
 **Description:** Emitted when an inference request uses structured
-output enforcement — JSON schema constraints, function calling schema,
+output enforcement - JSON schema constraints, function calling schema,
 grammar-based decoding, or other mechanisms that constrain model output
 to a specific format. This event records whether the constrained output
 validated successfully and captures validation failures that indicate
@@ -1565,7 +1565,7 @@ model-schema misalignment.
 
 <br>
 
-## SECTION 8: CATEGORY — AGENT EVENTS
+## SECTION 8: CATEGORY - AGENT EVENTS
 
 *Normative*
 
@@ -1753,7 +1753,7 @@ and debugging of graph execution paths.
 
 <br>
 
-## SECTION 9: CATEGORY — TOOL EVENTS
+## SECTION 9: CATEGORY - TOOL EVENTS
 
 *Normative*
 
@@ -1847,7 +1847,7 @@ schema retrieval, and dynamic tool registration.
 
 **Description:** Emitted when an MCP resource is accessed. MCP
 resources are structured data exposed by MCP servers (distinct from
-tools) that provide context to LLM interactions — including files,
+tools) that provide context to LLM interactions - including files,
 database records, API responses, and live system data. Resource access
 events enable auditing of what contextual data was consumed by AI
 systems.
@@ -1875,7 +1875,7 @@ systems.
 **Stability:** Stable
 
 **Description:** Emitted when an MCP server initiates a sampling request
-— requesting the MCP client (host application) to perform an LLM
+- requesting the MCP client (host application) to perform an LLM
 inference on the server's behalf. MCP sampling inverts the normal
 tool-call flow: the server requests inference from the client. This
 event captures the server-initiated request and its outcome.
@@ -1900,7 +1900,7 @@ event captures the server-initiated request and its outcome.
 
 <br>
 
-## SECTION 10: CATEGORY — MEMORY EVENTS
+## SECTION 10: CATEGORY - MEMORY EVENTS
 
 *Normative*
 
@@ -1909,7 +1909,7 @@ event captures the server-initiated request and its outcome.
 Memory events record read and write operations against memory stores,
 knowledge bases, context systems, and retrieval-augmented generation
 (RAG) pipelines used by AI systems. Memory strongly influences AI
-behavior — what an agent remembers, what context is retrieved, and what
+behavior - what an agent remembers, what context is retrieved, and what
 knowledge is persisted directly shapes future inferences and decisions.
 Memory events make this influence observable.
 
@@ -1989,14 +1989,14 @@ persists context, updates a knowledge base, or stores embeddings.
 
 <br>
 
-## SECTION 11: CATEGORY — HUMAN INTERACTION EVENTS
+## SECTION 11: CATEGORY - HUMAN INTERACTION EVENTS
 
 *Normative*
 
 ### 11.1 Purpose
 
 Human interaction events record the points at which humans engage with
-AI systems — providing feedback, confirming actions, responding to
+AI systems - providing feedback, confirming actions, responding to
 escalations, or intervening in automated workflows. These events close
 the loop between AI behavior and human oversight, enabling audit of
 human-in-the-loop processes and providing the evidentiary basis for
@@ -2092,7 +2092,7 @@ proceed, resume, or terminate.
 
 <br>
 
-## SECTION 12: CATEGORY — AUTHORITY EVENTS
+## SECTION 12: CATEGORY - AUTHORITY EVENTS
 
 *Normative*
 
@@ -2261,7 +2261,7 @@ a default-deny enforcement.
 
 <br>
 
-## SECTION 13: CATEGORY — SESSION EVENTS
+## SECTION 13: CATEGORY - SESSION EVENTS
 
 *Normative*
 
@@ -2401,7 +2401,7 @@ before the session reaches an operational state.
 
 <br>
 
-## SECTION 14: CATEGORY — CREDENTIAL EVENTS
+## SECTION 14: CATEGORY - CREDENTIAL EVENTS
 
 *Normative*
 
@@ -2458,8 +2458,8 @@ integration), SHOULD contain:
 | `intent_summary` | string | Summary of the delegated intent. Subject to redaction. |
 | `granted_at` | string | ISO 8601 UTC timestamp of the delegation grant. |
 
-**REQ-14.2.3:** Credential material — including private keys, bearer
-tokens, passwords, and raw certificate content — MUST NOT be included
+**REQ-14.2.3:** Credential material - including private keys, bearer
+tokens, passwords, and raw certificate content - MUST NOT be included
 in credential events. Only fingerprints, identifiers, and metadata
 about the credential are permitted.
 
@@ -2542,7 +2542,7 @@ fail-closed governance in ALS deployments.
 
 <br>
 
-## SECTION 15: CATEGORY — POLICY EVENTS
+## SECTION 15: CATEGORY - POLICY EVENTS
 
 *Normative*
 
@@ -2686,14 +2686,14 @@ not an error condition.
 
 <br>
 
-## SECTION 16: CATEGORY — SUPPLY CHAIN EVENTS
+## SECTION 16: CATEGORY - SUPPLY CHAIN EVENTS
 
 *Normative*
 
 ### 16.1 Purpose
 
 Supply chain events record the validation, verification, and
-enforcement actions related to AI supply chain artifacts — including
+enforcement actions related to AI supply chain artifacts - including
 models, datasets, embeddings, dependencies, agent logic, tools, and
 infrastructure components. These events provide the audit trail
 necessary to demonstrate that AI system components are authentic,
@@ -2703,7 +2703,7 @@ Supply chain events are the primary audit mechanism for implementations
 of the AI Supply Chain Standard (AI-SCS).
 
 **Cross-Standard References:**
-- AI-SCS Section 5 (ABOM — AI Bill of Materials & Provenance)
+- AI-SCS Section 5 (ABOM - AI Bill of Materials & Provenance)
 - AI-SCS Section 6 (AI Artifact Integrity & Authenticity Assurance)
 - AI-SCS Section 7 (Continuous AI Supply Chain Validation)
 
@@ -2801,7 +2801,7 @@ or its validity status changes.
 **Stability:** Stable
 
 **Description:** Emitted when a runtime supply chain validation
-detects a violation — an unauthorized, modified, or undeclared artifact
+detects a violation - an unauthorized, modified, or undeclared artifact
 is detected in the operating environment.
 
 **Cross-Standard References:**
@@ -2825,14 +2825,14 @@ contain:
 
 <br>
 
-## SECTION 17: CATEGORY — INTEGRITY EVENTS
+## SECTION 17: CATEGORY - INTEGRITY EVENTS
 
 *Normative*
 
 ### 17.1 Purpose
 
 Integrity events record the verification of MCP tool and server
-integrity — including sealed manifest verification, interface
+integrity - including sealed manifest verification, interface
 fingerprint comparison, artifact digest checking, version lineage
 validation, and trust-on-first-use (TOFU) operations. These events
 provide the audit trail for MCP tool supply chain integrity.
@@ -2993,14 +2993,14 @@ detects a mismatch against a previously cached TOFU value.
 
 <br>
 
-## SECTION 18: CATEGORY — CAPABILITY EVENTS
+## SECTION 18: CATEGORY - CAPABILITY EVENTS
 
 *Normative*
 
 ### 18.1 Purpose
 
 Capability events record the lifecycle of capability governance in
-AI planning systems — including capability discovery, planning
+AI planning systems - including capability discovery, planning
 authorization decisions, capability selection, execution contract
 management, and capability execution. These events provide the audit
 trail for verifying that capability exposure is governed by
@@ -3192,7 +3192,7 @@ failure, or source system error.
 
 <br>
 
-## SECTION 19: CATEGORY — CONTROL EVENTS
+## SECTION 19: CATEGORY - CONTROL EVENTS
 
 *Normative*
 
@@ -3469,7 +3469,7 @@ rejected.
 
 <br>
 
-## SECTION 20: CATEGORY — AGENT-TO-AGENT PROTOCOL EVENTS
+## SECTION 20: CATEGORY - AGENT-TO-AGENT PROTOCOL EVENTS
 
 *Normative*
 
@@ -3484,9 +3484,9 @@ observable, auditable, and correlatable with the internal behavior of
 each participating agent.
 
 A2A events are distinct from `agent.delegation` events (Section 8.4)
-in that they capture protocol-level interactions — task lifecycle,
+in that they capture protocol-level interactions - task lifecycle,
 message exchange, Agent Card discovery, and A2A-specific authentication
-— rather than abstract agent-to-agent delegation semantics.
+- rather than abstract agent-to-agent delegation semantics.
 
 **Protocol References:**
 - Google Agent-to-Agent Protocol (A2A), RC v1.0
@@ -3623,7 +3623,7 @@ capabilities evaluated.
 
 **Stability:** Stable
 
-**Description:** Emitted when an A2A authentication event occurs —
+**Description:** Emitted when an A2A authentication event occurs -
 including successful authentication, authentication failure, and
 credential exchange between agents.
 
@@ -3642,7 +3642,7 @@ credential exchange between agents.
 
 <br>
 
-## SECTION 21: CATEGORY — SYSTEM EVENTS
+## SECTION 21: CATEGORY - SYSTEM EVENTS
 
 *Normative*
 
@@ -3739,13 +3739,13 @@ conformance level.
 **Stability:** Stable
 
 **Description:** Emitted when logging infrastructure degradation is
-detected — including write failures, buffer overflow conditions,
+detected - including write failures, buffer overflow conditions,
 transport unavailability, or latency exceeding acceptable thresholds.
 
 **Cross-Standard References:**
 - AILS DP-10 (Fail-Safe Logging)
 - ACS REQ-11.5-L2-002 (Halt on buffer overflow)
-- ALS REQ-12.4.1 (Audit log write failure — CRITICAL alert)
+- ALS REQ-12.4.1 (Audit log write failure - CRITICAL alert)
 
 **REQ-21.5.1:** The `system.log_degraded` payload MUST contain:
 
@@ -3768,7 +3768,7 @@ transport unavailability, or latency exceeding acceptable thresholds.
 **Stability:** Stable
 
 **Description:** Emitted when a retention policy action is executed on
-AILS Events — including archival, deletion, or export of events that
+AILS Events - including archival, deletion, or export of events that
 have reached the end of their retention period.
 
 **REQ-21.6.1:** The `system.retention_action` payload MUST contain:
@@ -3794,7 +3794,7 @@ have reached the end of their retention period.
 **Description:** Emitted when a cost, token, or resource budget
 threshold is crossed. Budget events enable proactive cost governance
 and prevent runaway spending in AI systems. This event is distinct from
-quota exhaustion (hard limit) — budget thresholds are warning boundaries
+quota exhaustion (hard limit) - budget thresholds are warning boundaries
 that may or may not block further operations depending on policy.
 
 **REQ-21.7.1:** The `system.budget_exceeded` payload MUST contain:
@@ -4054,8 +4054,8 @@ the systems it monitors.
 ### 23.1 Purpose
 
 This section defines the provenance classification system for AILS
-Events. Provenance classification enables downstream systems — including
-policy engines, security monitors, and audit tools — to evaluate the
+Events. Provenance classification enables downstream systems - including
+policy engines, security monitors, and audit tools - to evaluate the
 trustworthiness of event sources without inspecting event payloads. The
 provenance system directly supports the data provenance enforcement
 requirements of the Deterministic Agent Execution (DAE) standard.
@@ -4191,7 +4191,7 @@ external data are classified based on the data's provenance.
 ### 24.1 Purpose
 
 This section defines the requirements for handling sensitive data within
-AILS Events. AI telemetry inherently involves sensitive content —
+AILS Events. AI telemetry inherently involves sensitive content -
 including user prompts, model outputs, personally identifiable
 information, reasoning chains, and credentials. AILS provides a
 normative framework for redaction that ensures events remain valid,
@@ -4241,8 +4241,8 @@ independently:
 - `human.feedback` → `comment`
 - `human.feedback` → `value` (when type is `correction`)
 
-**REQ-24.3.2:** Credential material — including private keys, bearer
-tokens, API keys, passwords, and raw certificate content — MUST NOT
+**REQ-24.3.2:** Credential material - including private keys, bearer
+tokens, API keys, passwords, and raw certificate content - MUST NOT
 appear in AILS Events under any configuration. This prohibition is
 absolute and is not subject to redaction profile configuration. There
 is no configuration option that enables credential material in events.
@@ -4488,7 +4488,7 @@ logging infrastructure.
 
 **REQ-26.2.1:** A deployment is classified as multi-tenant when two or
 more organizational tenants share any component of the AILS logging
-infrastructure — including Emitters, transport pipelines, storage
+infrastructure - including Emitters, transport pipelines, storage
 backends, or analysis tools.
 
 **REQ-26.2.2:** In multi-tenant deployments, the `tenant` object defined
@@ -4682,7 +4682,7 @@ requirements.
 
 <br>
 
-### 28.2 Level 1 — Structured Telemetry
+### 28.2 Level 1 - Structured Telemetry
 
 **REQ-28.2.1:** A Level 1 conformant implementation MUST satisfy all
 requirements in this standard that do not carry a `[Level 2+]` or
@@ -4723,7 +4723,7 @@ capabilities.
 
 <br>
 
-### 28.3 Level 2 — Governed Audit
+### 28.3 Level 2 - Governed Audit
 
 **REQ-28.3.1:** A Level 2 conformant implementation MUST satisfy all
 Level 1 requirements plus all requirements annotated `[Level 2+]` in
@@ -4768,7 +4768,7 @@ event signing capabilities.
 
 <br>
 
-### 28.4 Level 3 — Certified Audit
+### 28.4 Level 3 - Certified Audit
 
 **REQ-28.4.1:** A Level 3 conformant implementation MUST satisfy all
 Level 2 requirements plus all requirements annotated `[Level 3]` in
@@ -4882,8 +4882,8 @@ audit of Level 3 conformance.
 ### 29.1 OpenTelemetry
 
 AILS is complementary to OpenTelemetry. OpenTelemetry provides telemetry
-infrastructure — collection, correlation, export, and transport. AILS
-defines AI-specific semantics — the meaning and structure of AI
+infrastructure - collection, correlation, export, and transport. AILS
+defines AI-specific semantics - the meaning and structure of AI
 telemetry events.
 
 AILS events may be exported as OpenTelemetry log records, mapped to
@@ -5040,12 +5040,12 @@ satisfy MCP Integrity Standard Section 19.3 (Audit Logging).
 
 | AILS Element | EU AI Act Requirement |
 |---|---|
-| Event Envelope (§5) | Article 12 — logging capabilities |
-| Conformance Level 3 (§28.4) | Article 12 — automatic recording of events |
-| Retention — Regulatory tier (§25) | Article 12 — retention for the period appropriate to the intended purpose |
-| Provenance classification (§23) | Article 14 — human oversight, understanding of system behavior |
-| Redaction profiles (§24) | Article 10 — data governance, privacy by design |
-| Alert conditions (§27) | Article 9 — risk management, anomaly detection |
+| Event Envelope (§5) | Article 12 - logging capabilities |
+| Conformance Level 3 (§28.4) | Article 12 - automatic recording of events |
+| Retention - Regulatory tier (§25) | Article 12 - retention for the period appropriate to the intended purpose |
+| Provenance classification (§23) | Article 14 - human oversight, understanding of system behavior |
+| Redaction profiles (§24) | Article 10 - data governance, privacy by design |
+| Alert conditions (§27) | Article 9 - risk management, anomaly detection |
 
 AILS Level 3 provides the technical logging infrastructure for high-risk
 AI systems under EU AI Act Title III.
@@ -5056,11 +5056,11 @@ AI systems under EU AI Act Title III.
 
 | AILS Element | NIST AI RMF Function |
 |---|---|
-| Event taxonomy (§6) | MEASURE 2.6 — AI system performance and behavior documentation |
-| Provenance (§23) | MAP 5.1 — data provenance |
-| Alert conditions (§27) | MANAGE 2.2 — response mechanisms |
-| Integrity (§22) | GOVERN 2.1 — accountability mechanisms |
-| Retention (§25) | MEASURE 4.1 — post-deployment monitoring |
+| Event taxonomy (§6) | MEASURE 2.6 - AI system performance and behavior documentation |
+| Provenance (§23) | MAP 5.1 - data provenance |
+| Alert conditions (§27) | MANAGE 2.2 - response mechanisms |
+| Integrity (§22) | GOVERN 2.1 - accountability mechanisms |
+| Retention (§25) | MEASURE 4.1 - post-deployment monitoring |
 
 <br>
 
@@ -5803,7 +5803,7 @@ external standard.
 
 <br>
 
-### E.2 DAE — Deterministic Agent Execution
+### E.2 DAE - Deterministic Agent Execution
 
 | DAE Requirement | DAE Mechanism | AILS Event Type(s) |
 |---|---|---|
@@ -5818,7 +5818,7 @@ external standard.
 
 <br>
 
-### E.3 AGBAC — Agent-Based Access Control
+### E.3 AGBAC - Agent-Based Access Control
 
 | AGBAC Requirement | AGBAC Section | AILS Event Type(s) |
 |---|---|---|
@@ -5831,7 +5831,7 @@ external standard.
 
 <br>
 
-### E.4 ALS — Agent Layer Security
+### E.4 ALS - Agent Layer Security
 
 | ALS Audit Event | ALS Section | AILS Event Type |
 |---|---|---|
@@ -5863,7 +5863,7 @@ external standard.
 
 <br>
 
-### E.5 AI-SCS — AI Supply Chain Standard
+### E.5 AI-SCS - AI Supply Chain Standard
 
 | AI-SCS Requirement | AI-SCS Section | AILS Event Type |
 |---|---|---|
@@ -5877,7 +5877,7 @@ external standard.
 
 <br>
 
-### E.6 ACS — Agent Capability Standard
+### E.6 ACS - Agent Capability Standard
 
 | ACS Audit Event | ACS Section | AILS Event Type |
 |---|---|---|
@@ -5915,7 +5915,7 @@ external standard.
 
 <br>
 
-### E.8 A2A — Agent-to-Agent Protocol
+### E.8 A2A - Agent-to-Agent Protocol
 
 | A2A Protocol Operation | AILS Event |
 |---|---|
@@ -5994,14 +5994,14 @@ counsel to determine their specific compliance obligations.
 
 | CSF Function | Category | AILS Element | AILS Level |
 |---|---|---|---|
-| GOVERN (GV) | GV.RM — Risk Management | Alert conditions (§27), Conformance (§28) | L2 |
-| IDENTIFY (ID) | ID.AM — Asset Management | Supply chain events (§16), Tool discovery (§9.3) | L1 |
-| PROTECT (PR) | PR.AC — Access Control | Policy events (§15), Authority events (§12), Credential events (§14) | L2 |
-| DETECT (DE) | DE.AE — Adverse Event Analysis | Alert conditions (§27), Policy violations (§15.3) | L2 |
-| DETECT (DE) | DE.CM — Continuous Monitoring | System health (§21.3), Integrity events (§17) | L2 |
-| RESPOND (RS) | RS.MI — Mitigation | Control events (§19), Session events (§13) | L2 |
-| RESPOND (RS) | RS.CO — Communication | Push notification events (§19.8–19.10), Alert destinations (§27.4) | L2 |
-| RECOVER (RC) | RC.RP — Recovery Planning | Session resumed events (§13.3), Credential renewed events (§14.3) | L2 |
+| GOVERN (GV) | GV.RM - Risk Management | Alert conditions (§27), Conformance (§28) | L2 |
+| IDENTIFY (ID) | ID.AM - Asset Management | Supply chain events (§16), Tool discovery (§9.3) | L1 |
+| PROTECT (PR) | PR.AC - Access Control | Policy events (§15), Authority events (§12), Credential events (§14) | L2 |
+| DETECT (DE) | DE.AE - Adverse Event Analysis | Alert conditions (§27), Policy violations (§15.3) | L2 |
+| DETECT (DE) | DE.CM - Continuous Monitoring | System health (§21.3), Integrity events (§17) | L2 |
+| RESPOND (RS) | RS.MI - Mitigation | Control events (§19), Session events (§13) | L2 |
+| RESPOND (RS) | RS.CO - Communication | Push notification events (§19.8–19.10), Alert destinations (§27.4) | L2 |
+| RECOVER (RC) | RC.RP - Recovery Planning | Session resumed events (§13.3), Credential renewed events (§14.3) | L2 |
 
 <br>
 
@@ -6163,12 +6163,12 @@ attack techniques from AILS event streams.
 | Discover ML Model Ontology | AML.T0044 | Repeated PAEP-denied capability queries probing for available capabilities | Multiple `capability.paep_evaluated` (decision: `denied`) for same planner in short window |
 | LLM Prompt Injection | AML.T0051 | Guardrail detects prompt injection pattern in input | `inference.guardrail` (result: `fail`, categories includes `prompt_injection`) |
 | LLM Jailbreak | AML.T0054 | Guardrail detects jailbreak attempt | `inference.guardrail` (result: `fail`, categories includes `jailbreak`) |
-| LLM Plugin Compromise | AML.T0056 | MCP tool interface fingerprint mismatch — tool description or schema modified | `integrity.fingerprint_checked` (result: `mismatch`) or `integrity.tofu_changed` |
+| LLM Plugin Compromise | AML.T0056 | MCP tool interface fingerprint mismatch - tool description or schema modified | `integrity.fingerprint_checked` (result: `mismatch`) or `integrity.tofu_changed` |
 | Exfiltration via ML Inference API | AML.T0024 | Unusual volume of inference calls or token consumption from a single session | `system.budget_exceeded` combined with high `inference.call` volume per session |
 | Evade ML Model | AML.T0015 | Repeated inference calls with variations targeting refusal boundaries | Multiple `inference.call` (output.refusal: `true`) followed by `inference.call` (status: `success`) in same trace |
 | Craft Adversarial Data | AML.T0043 | Structured output validation failures suggesting adversarial schema probing | Multiple `inference.structured_output` (validation_result: `invalid`) in short window |
-| Abuse Existing Tool Access | — | Tool invocation denied by authority gate or policy | `authority.gate_denied` or `tool.call` (status: `denied`) |
-| Unauthorized Agent Delegation | — | Agent delegation to unrecognized or unauthorized agent | `agent.delegation` (status: `rejected`) or `a2a.authentication` (result: `failed`) |
+| Abuse Existing Tool Access | - | Tool invocation denied by authority gate or policy | `authority.gate_denied` or `tool.call` (status: `denied`) |
+| Unauthorized Agent Delegation | - | Agent delegation to unrecognized or unauthorized agent | `agent.delegation` (status: `rejected`) or `a2a.authentication` (result: `failed`) |
 
 <br>
 
@@ -6248,7 +6248,7 @@ tags:
 
 <br>
 
-#### I.2.2 Supply Chain Validation Failure — Model Substitution
+#### I.2.2 Supply Chain Validation Failure - Model Substitution
 
 ```yaml
 title: AILS Model Substitution Detected
@@ -6306,7 +6306,7 @@ tags:
 
 <br>
 
-#### I.2.4 MCP Tool Poisoning — Interface Change
+#### I.2.4 MCP Tool Poisoning - Interface Change
 
 ```yaml
 title: AILS MCP Tool Interface Tampering
@@ -6393,7 +6393,7 @@ tags:
 title: AILS Agent Budget Exhaustion
 id: ails-007
 status: stable
-description: Detects autonomous agent exceeding resource budgets — potential runaway behavior
+description: Detects autonomous agent exceeding resource budgets - potential runaway behavior
 references:
   - AILS v1.0.0 Section 21
 level: medium
@@ -6434,7 +6434,7 @@ detection:
     payload.alert_name: "execution_without_confirmation"
   condition: selection
 falsepositives:
-  - None expected — this indicates a governance bypass
+  - None expected - this indicates a governance bypass
 tags:
   - ails.capability
   - attack.execution
@@ -6526,7 +6526,7 @@ Webhook delivery SHOULD use:
 ```json
 {
   "ails_webhook_version": "1.0",
-  "delivery_id": "<UUID v4 — unique per delivery attempt>",
+  "delivery_id": "<UUID v4 - unique per delivery attempt>",
   "delivered_at": "<ISO 8601 UTC timestamp>",
   "alert": {
     "alert_name": "<from system.alert payload>",
@@ -7035,7 +7035,7 @@ integrity envelope.
 
 <br>
 
-### K.7 Example 6: `system.alert` — Chain Hash Integrity Failure (Level 2)
+### K.7 Example 6: `system.alert` - Chain Hash Integrity Failure (Level 2)
 
 A critical integrity alert with indicators and full integrity envelope.
 
@@ -7111,7 +7111,7 @@ per the algorithm defined in Section 22.4.3 (REQ-22.4.8 and
 REQ-22.4.9). All SHA-256 values have been computed and are
 independently verifiable using any compliant SHA-256 implementation.
 
-#### Test Vector 1 — First Event in a Stream
+#### Test Vector 1 - First Event in a Stream
 
 Per REQ-22.4.9, the first event uses `stream_id` as the predecessor.
 
@@ -7135,7 +7135,7 @@ chain_hash = sha256:09e9993c2573ea2b8d1473e721f35a2157e6fda20d5c018c0fe665d8af27
 
 <br>
 
-#### Test Vector 2 — Second Event in the Same Stream
+#### Test Vector 2 - Second Event in the Same Stream
 
 Per REQ-22.4.8, subsequent events use the previous event's `chain_hash`
 as the predecessor.
@@ -7160,7 +7160,7 @@ chain_hash = sha256:88b2859e504f669e236dca1dbb455e15a1758ad395ddaff04d5a242ff852
 
 <br>
 
-#### Test Vector 3 — Third Event in the Same Stream
+#### Test Vector 3 - Third Event in the Same Stream
 
 **Inputs:**
 
@@ -7258,7 +7258,7 @@ https://www.rfc-editor.org/rfc/rfc5424
 **[W3C-TRACE]** W3C, "Trace Context", W3C Recommendation,
 2021-11-23. https://www.w3.org/TR/trace-context/
 
-**[ISO 8601]** ISO, "Date and time — Representations for information
+**[ISO 8601]** ISO, "Date and time - Representations for information
 interchange", ISO 8601:2019.
 
 **[ISO 4217]** ISO, "Codes for the representation of currencies",
@@ -7307,8 +7307,8 @@ Public Law 107-204, 2002.
 **[HIPAA]** United States Congress, "Health Insurance Portability and
 Accountability Act of 1996", Public Law 104-191, 1996.
 
-**[ISO-42001]** ISO/IEC, "Information technology — Artificial
-intelligence — Management system", ISO/IEC 42001:2023.
+**[ISO-42001]** ISO/IEC, "Information technology - Artificial
+intelligence - Management system", ISO/IEC 42001:2023.
 
 **[DAE]** Reilly, S.K., "Deterministic Agent Execution Security
 Standard", v1.0.0, 2026.
