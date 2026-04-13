@@ -510,8 +510,8 @@ envelope.
 
 **DP-2 - SINGLE ENVELOPE, ALL EVENT TYPES**
 
-Every AILS Event - from a simple LLM inference call to a tamper-evident
-security audit record - SHALL use the same canonical Event Envelope. The
+Every AILS Event, from a simple LLM inference call to a tamper-evident
+security audit record, SHALL use the same canonical Event Envelope. The
 envelope is invariant across event categories, conformance levels, and
 deployment contexts. Variation between event types is expressed
 exclusively in the event payload, never in the envelope structure.
@@ -544,8 +544,8 @@ event.
 **DP-5 - PROVENANCE IS MANDATORY**
 
 Every AILS Event SHALL carry a provenance tag classifying the trust
-level of the event source. This classification - SYSTEM_TRUSTED,
-USER_TRUSTED, or EXTERNAL_UNTRUSTED - is a required envelope field, not
+level of the event source. This classification, SYSTEM_TRUSTED,
+USER_TRUSTED, or EXTERNAL_UNTRUSTED, is a required envelope field, not
 an optional annotation. Downstream systems MUST be able to filter,
 route, and evaluate events based on provenance without inspecting
 payloads.
@@ -554,8 +554,8 @@ payloads.
 
 **DP-6 - CORRELATION IS FIRST-CLASS**
 
-AILS SHALL provide mandatory correlation fields - trace ID, span ID,
-and session ID - in every event envelope. Multi-step agent workflows,
+AILS SHALL provide mandatory correlation fields, trace ID, span ID,
+and session ID, in every event envelope. Multi-step agent workflows,
 cross-service interactions, and end-to-end request chains MUST be
 reconstructable from AILS events using standard correlation fields
 alone, without requiring payload inspection or external metadata.
@@ -601,7 +601,7 @@ SHALL be non-blocking. At Level 2 and above, implementations SHOULD
 buffer events during transient logging failures and MUST emit a system
 alert event when logging degradation is detected. Only when a specific
 security standard (e.g., ALS, ACS) mandates fail-closed behavior on
-audit failure does logging failure become blocking - and that behavior
+audit failure does logging failure become blocking, and that behavior
 is governed by the security standard, not by AILS itself.
 
 <br>
@@ -752,8 +752,8 @@ object SHOULD be present and MAY contain:
 | `issuer` | string | OPTIONAL | Identity provider issuer URL. |
 | `roles` | array of string | OPTIONAL | Roles held by the human principal at event time. |
 
-**REQ-5.5.4:** In events where both an agent and a human are relevant
-- such as dual-subject authorization decisions defined by AGBAC - the
+**REQ-5.5.4:** In events where both an agent and a human are relevant,
+such as dual-subject authorization decisions defined by AGBAC, the
 `actor` field SHALL represent the primary actor (typically the agent),
 and the secondary actor (typically the human principal) SHALL be
 represented within the event `payload` using the `delegating_principal`
@@ -1462,7 +1462,7 @@ inference content.
 **Stability:** Stable
 
 **Description:** Emitted when an inference gateway, proxy, or router
-makes a routing decision - selecting a model, provider, or endpoint for
+makes a routing decision, selecting a model, provider, or endpoint for
 an inference request based on cost, latency, availability, or policy
 criteria.
 
@@ -1484,7 +1484,7 @@ criteria.
 **Stability:** Stable
 
 **Description:** Emitted when a non-text generative AI operation
-completes - including image generation, audio synthesis, video
+completes, including image generation, audio synthesis, video
 generation, code execution, and other modalities where the output is
 not a text completion. This event type covers operations that are
 structurally different from text inference (different parameters,
@@ -1545,7 +1545,7 @@ present, MAY contain:
 **Stability:** Stable
 
 **Description:** Emitted when an inference request uses structured
-output enforcement - JSON schema constraints, function calling schema,
+output enforcement, JSON schema constraints, function calling schema,
 grammar-based decoding, or other mechanisms that constrain model output
 to a specific format. This event records whether the constrained output
 validated successfully and captures validation failures that indicate
@@ -2693,7 +2693,7 @@ not an error condition.
 ### 16.1 Purpose
 
 Supply chain events record the validation, verification, and
-enforcement actions related to AI supply chain artifacts - including
+enforcement actions related to AI supply chain artifacts, including
 models, datasets, embeddings, dependencies, agent logic, tools, and
 infrastructure components. These events provide the audit trail
 necessary to demonstrate that AI system components are authentic,
@@ -2801,7 +2801,7 @@ or its validity status changes.
 **Stability:** Stable
 
 **Description:** Emitted when a runtime supply chain validation
-detects a violation - an unauthorized, modified, or undeclared artifact
+detects a violation, an unauthorized, modified, or undeclared artifact
 is detected in the operating environment.
 
 **Cross-Standard References:**
@@ -2832,7 +2832,7 @@ contain:
 ### 17.1 Purpose
 
 Integrity events record the verification of MCP tool and server
-integrity - including sealed manifest verification, interface
+integrity, including sealed manifest verification, interface
 fingerprint comparison, artifact digest checking, version lineage
 validation, and trust-on-first-use (TOFU) operations. These events
 provide the audit trail for MCP tool supply chain integrity.
@@ -3000,7 +3000,7 @@ detects a mismatch against a previously cached TOFU value.
 ### 18.1 Purpose
 
 Capability events record the lifecycle of capability governance in
-AI planning systems - including capability discovery, planning
+AI planning systems, including capability discovery, planning
 authorization decisions, capability selection, execution contract
 management, and capability execution. These events provide the audit
 trail for verifying that capability exposure is governed by
@@ -3484,9 +3484,9 @@ observable, auditable, and correlatable with the internal behavior of
 each participating agent.
 
 A2A events are distinct from `agent.delegation` events (Section 8.4)
-in that they capture protocol-level interactions - task lifecycle,
-message exchange, Agent Card discovery, and A2A-specific authentication
-- rather than abstract agent-to-agent delegation semantics.
+in that they capture protocol-level interactions, task lifecycle,
+message exchange, Agent Card discovery, and A2A-specific authentication,
+rather than abstract agent-to-agent delegation semantics.
 
 **Protocol References:**
 - Google Agent-to-Agent Protocol (A2A), RC v1.0
@@ -3623,7 +3623,7 @@ capabilities evaluated.
 
 **Stability:** Stable
 
-**Description:** Emitted when an A2A authentication event occurs -
+**Description:** Emitted when an A2A authentication event occurs,
 including successful authentication, authentication failure, and
 credential exchange between agents.
 
@@ -3739,7 +3739,7 @@ conformance level.
 **Stability:** Stable
 
 **Description:** Emitted when logging infrastructure degradation is
-detected - including write failures, buffer overflow conditions,
+detected, including write failures, buffer overflow conditions,
 transport unavailability, or latency exceeding acceptable thresholds.
 
 **Cross-Standard References:**
@@ -3768,7 +3768,7 @@ transport unavailability, or latency exceeding acceptable thresholds.
 **Stability:** Stable
 
 **Description:** Emitted when a retention policy action is executed on
-AILS Events - including archival, deletion, or export of events that
+AILS Events, including archival, deletion, or export of events that
 have reached the end of their retention period.
 
 **REQ-21.6.1:** The `system.retention_action` payload MUST contain:
@@ -4054,8 +4054,8 @@ the systems it monitors.
 ### 23.1 Purpose
 
 This section defines the provenance classification system for AILS
-Events. Provenance classification enables downstream systems - including
-policy engines, security monitors, and audit tools - to evaluate the
+Events. Provenance classification enables downstream systems, including
+policy engines, security monitors, and audit tools, to evaluate the
 trustworthiness of event sources without inspecting event payloads. The
 provenance system directly supports the data provenance enforcement
 requirements of the Deterministic Agent Execution (DAE) standard.
@@ -4191,7 +4191,7 @@ external data are classified based on the data's provenance.
 ### 24.1 Purpose
 
 This section defines the requirements for handling sensitive data within
-AILS Events. AI telemetry inherently involves sensitive content -
+AILS Events. AI telemetry inherently involves sensitive content,
 including user prompts, model outputs, personally identifiable
 information, reasoning chains, and credentials. AILS provides a
 normative framework for redaction that ensures events remain valid,
@@ -4241,8 +4241,8 @@ independently:
 - `human.feedback` → `comment`
 - `human.feedback` → `value` (when type is `correction`)
 
-**REQ-24.3.2:** Credential material - including private keys, bearer
-tokens, API keys, passwords, and raw certificate content - MUST NOT
+**REQ-24.3.2:** Credential material, including private keys, bearer
+tokens, API keys, passwords, and raw certificate content, MUST NOT
 appear in AILS Events under any configuration. This prohibition is
 absolute and is not subject to redaction profile configuration. There
 is no configuration option that enables credential material in events.
@@ -4488,7 +4488,7 @@ logging infrastructure.
 
 **REQ-26.2.1:** A deployment is classified as multi-tenant when two or
 more organizational tenants share any component of the AILS logging
-infrastructure - including Emitters, transport pipelines, storage
+infrastructure, including Emitters, transport pipelines, storage
 backends, or analysis tools.
 
 **REQ-26.2.2:** In multi-tenant deployments, the `tenant` object defined
@@ -4882,8 +4882,8 @@ audit of Level 3 conformance.
 ### 29.1 OpenTelemetry
 
 AILS is complementary to OpenTelemetry. OpenTelemetry provides telemetry
-infrastructure - collection, correlation, export, and transport. AILS
-defines AI-specific semantics - the meaning and structure of AI
+infrastructure, collection, correlation, export, and transport. AILS
+defines AI-specific semantics, the meaning and structure of AI
 telemetry events.
 
 AILS events may be exported as OpenTelemetry log records, mapped to
