@@ -335,15 +335,17 @@ For the complete formal specification, including all 73 event type definitions, 
 
 [AILS-Standard-v1.0.0.md](https://github.com/kahalewai/ails/blob/main/spec/ails_specification.md)
 
-**Status:** Released
-
-**Version:** v1.0.0
-
-**License:** Apache License 2.0
+**Status:** Public Draft for Community Review
 
 **Date:** 2026-04-10
 
+**Version:** 1.0.0
+
+**License:** Apache License, Version 2.0
+
 **Author:** Shawn Kahalewai Reilly
+
+**Audience:** Security architects, AI engineers, AI platform builders, AI security teams, Security Standard authors
 
 <br>
 <br>
