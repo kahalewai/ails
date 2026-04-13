@@ -10,6 +10,8 @@
 
 **License:** Apache License, Version 2.0
 
+**Author:** Shawn Kahalewai Reilly
+
 **Audience:** Security architects, AI engineers, AI platform builders, AI security teams, Security Standard authors
 
 <br>
