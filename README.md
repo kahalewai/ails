@@ -96,9 +96,9 @@ Every event carries W3C Trace Context-compatible `trace_id` and `span_id` fields
 
 | Level | Mechanism | Use Case |
 |---|---|---|
-| **Level 1** | Structured telemetry, no integrity overhead | Developer observability, debugging, cost tracking |
-| **Level 2** | Sequence numbering + chain hashing | Enterprise audit trails, compliance logging, governance records |
-| **Level 3** | Level 2 + cryptographic event signing (Ed25519 / ES256) | Regulatory compliance, forensic evidence, high-risk AI system audit |
+| **1** | Structured telemetry, no integrity overhead | Developer observability, debugging, cost tracking |
+| **2** | Sequence numbering + chain hashing | Enterprise audit trails, compliance logging, governance records |
+| **3** | Level 2 + cryptographic event signing (Ed25519 / ES256) | Regulatory compliance, forensic evidence, high-risk AI system audit |
 
 A Level 1 event requires zero cryptographic dependencies. Level 2 adds tamper-evidence. Level 3 adds non-repudiation. Levels are cumulative.
 
@@ -106,7 +106,7 @@ A Level 1 event requires zero cryptographic dependencies. Level 2 adds tamper-ev
 
 **Privacy is built in by construction**
 
-All prompt content, completion content, reasoning chains, PII, and tool arguments are classified as sensitive by default and are redactable. A fully redacted AILS event remains valid, parseable, and correlatable. Credential material is absolutely prohibited — there is no configuration option that enables it.
+All prompt content, completion content, reasoning chains, PII, and tool arguments are classified as sensitive by default and are redactable. A fully redacted AILS event remains valid, parseable, and correlatable. Credential material is absolutely prohibited, there is no configuration option that enables it.
 
 <br>
 <br>
